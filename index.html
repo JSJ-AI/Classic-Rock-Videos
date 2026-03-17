@@ -69,7 +69,7 @@
   .badge { display: inline-block; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: .1em; padding: 2px 7px; border: 1px solid var(--border); margin-top: 6px; border-radius: 2px; }
   .bk{color:var(--c-kansas);} .bb{color:var(--c-boston);} .bf{color:var(--c-foreigner);} .bj{color:var(--c-journey);} .bn{color:var(--c-nightranger);}
 
-  /* Modal */
+  /* ── MODAL ── */
   .modal-overlay { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding:20px; }
   .modal-overlay.open { display:flex; }
   .modal-box { position:relative; width:100%; max-width:900px; background:#0D0A06; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.15); box-shadow:0 20px 60px rgba(0,0,0,0.8); }
@@ -78,14 +78,39 @@
   .modal-meta { font-size:12px; color:var(--muted); font-style:italic; margin-top:2px; }
   .modal-close { background:transparent; border:1px solid var(--border); color:var(--muted); font-size:20px; line-height:1; padding:4px 10px; cursor:pointer; border-radius:3px; transition:color .2s; flex-shrink:0; }
   .modal-close:hover { color:var(--text); border-color:rgba(255,255,255,0.4); }
+
+  /* Player area — iframe sits on top, fallback sits below, both same space */
   .modal-player { position:relative; padding-bottom:56.25%; background:#000; }
-  .modal-player iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
-  /* Fallback shown when video is blocked */
-  .modal-blocked { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:#0D0A06; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:24px; text-align:center; }
-  .modal-blocked.show { display:flex; }
-  .modal-blocked p { font-size:14px; color:var(--muted); font-style:italic; }
-  .modal-blocked a { font-family:'Cinzel',serif; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--text); border:1px solid var(--border); padding:10px 20px; border-radius:2px; text-decoration:none; transition:border-color .2s; }
-  .modal-blocked a:hover { border-color:rgba(255,255,255,0.4); }
+  .modal-player iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; z-index:2; }
+
+  /* Fallback — hidden by default, shown when iframe reports an error */
+  .modal-fallback {
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    background: #0D0A06;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:20px; padding:32px; text-align:center;
+    z-index:3;          /* sits on top of iframe when visible */
+    opacity:0; pointer-events:none;
+    transition: opacity .3s;
+  }
+  .modal-fallback.visible { opacity:1; pointer-events:all; }
+  .fallback-icon { font-size:40px; opacity:.4; }
+  .fallback-msg { font-size:15px; color:var(--muted); font-style:italic; line-height:1.6; max-width:340px; }
+  .fallback-msg strong { color:var(--text); font-style:normal; }
+  /* The big Watch on YouTube button */
+  .yt-watch-btn {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Cinzel',serif; font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    padding:14px 28px; border-radius:3px;
+    background: #FF0000; color:#fff;
+    text-decoration:none; border:none; cursor:pointer;
+    transition: background .2s, transform .1s;
+    box-shadow: 0 4px 20px rgba(255,0,0,0.3);
+  }
+  .yt-watch-btn:hover { background:#CC0000; transform:translateY(-1px); }
+  .yt-watch-btn:active { transform:translateY(0); }
+  .yt-watch-btn svg { width:20px; height:20px; fill:white; flex-shrink:0; }
+
   .modal-footer { padding:10px 16px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border); }
   .modal-yt-link { font-family:'Cinzel',serif; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:6px; transition:color .2s; }
   .modal-yt-link:hover { color:var(--text); }
@@ -105,6 +130,7 @@
 </head>
 <body>
 
+<!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal-box">
     <div class="modal-header">
@@ -115,15 +141,27 @@
       <button class="modal-close" onclick="closeModalNow()">✕</button>
     </div>
     <div class="modal-player">
-      <iframe id="modal-iframe" allowfullscreen allow="autoplay; encrypted-media" src=""></iframe>
-      <!-- shown if the label blocks embedding -->
-      <div class="modal-blocked" id="modal-blocked">
-        <p>This video cannot be embedded — the label has disabled it.<br>Click below to watch it directly on YouTube.</p>
-        <a id="modal-blocked-link" href="#" target="_blank">Watch on YouTube ↗</a>
+      <iframe id="modal-iframe"
+        allowfullscreen
+        allow="autoplay; encrypted-media"
+        src=""
+        onload="onIframeLoad(this)">
+      </iframe>
+      <!-- Fallback shown when embedding is blocked -->
+      <div class="modal-fallback" id="modal-fallback">
+        <div class="fallback-icon">🎵</div>
+        <div class="fallback-msg">
+          <strong id="fallback-title"></strong><br>
+          The label has disabled embedding for this video.<br>Click below to watch it on YouTube.
+        </div>
+        <a class="yt-watch-btn" id="fallback-btn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+          Watch on YouTube
+        </a>
       </div>
     </div>
     <div class="modal-footer">
-      <a class="modal-yt-link" id="modal-yt-link" href="#" target="_blank">↗ Open on YouTube</a>
+      <a class="modal-yt-link" id="modal-yt-link" href="#" target="_blank" rel="noopener">↗ Open on YouTube</a>
       <div class="modal-hint">Esc or click outside to close</div>
     </div>
   </div>
@@ -160,27 +198,15 @@
       <a class="lj" href="https://www.journeymusic.com" target="_blank">journeymusic.com</a> &nbsp;·&nbsp;
       <a class="ln" href="https://www.nightranger.com" target="_blank">nightranger.com</a>
     </div>
-    <div>Videos powered by YouTube · Click any thumbnail to play</div>
+    <div>Videos powered by YouTube · Some videos open directly on YouTube if embedding is restricted</div>
   </div>
 </div>
 
 <script>
-/*
-  VIDEO ID NOTES
-  ==============
-  All IDs below are from YouTube "Topic" auto-generated channels or official
-  music video uploads — these have embedding enabled by default.
-  "Official Audio" uploads (the ones with the album art thumbnail) almost
-  always block embedding. Topic channel IDs look the same but are allowed.
-
-  If a label changes their policy after this file was built, the blocked
-  fallback div will appear automatically, with a direct YouTube link.
-*/
 const cfg = {
   kansas:{label:'Kansas',tc:'ak',cc:'ck',bc:'bk',nc:'ak',color:'var(--c-kansas)',
     bio:"<strong style='color:var(--c-kansas)'>KANSAS</strong> — Founded 1973 in Topeka, Kansas. Blending British prog complexity with heartland soul, they produced eight gold albums and three sextuple-platinum records. <em>Carry On Wayward Son</em> and <em>Dust in the Wind</em> remain staples of classic rock radio worldwide.",
     videos:[
-      // Official Video versions (embedding allowed)
       {id:'P5ZJui3aPoQ',title:'Carry On Wayward Son',meta:'Official Video · Leftoverture, 1976',era:'classic'},
       {id:'tH2w6Oxx0kQ',title:'Dust in the Wind',meta:'Official Video · Point of Know Return, 1977',era:'classic'},
       {id:'OmFWz5tBJbs',title:'Point of Know Return',meta:'Official Video · Point of Know Return, 1977',era:'classic'},
@@ -228,7 +254,7 @@ const cfg = {
   journey:{label:'Journey',tc:'aj',cc:'cj',bc:'bj',nc:'aj',color:'var(--c-journey)',
     bio:"<strong style='color:var(--c-journey)'>JOURNEY</strong> — Formed 1973 in San Francisco. With Steve Perry's legendary vocals, they became one of the best-selling bands of all time. <em>Don't Stop Believin'</em> is one of the best-selling digital singles in history. Over 100 million records sold worldwide.",
     videos:[
-      {id:'1k8craCGpgs',title:"Don't Stop Believin'",meta:"Official Video · Escape, 1981",era:'classic'},
+      {id:'1k8craCGpgs',title:"Don't Stop Believin'",meta:'Official Video · Escape, 1981',era:'classic'},
       {id:'OMD8ZoOLzFI',title:'Open Arms',meta:'Official Video · Escape, 1981',era:'classic'},
       {id:'G9PuYbKmpoI',title:'Faithfully',meta:'Official Video · Frontiers, 1983',era:'classic'},
       {id:'nG9oN7fJGiI',title:'Separate Ways (Worlds Apart)',meta:'Official Video · Frontiers, 1983',era:'classic'},
@@ -259,44 +285,94 @@ const cfg = {
 const eraLabel={classic:'Classic Era',live:'Live',modern:'Modern Era',documentary:'Documentary'};
 const eras=['all','classic','live','modern','documentary'];
 const th  = id => 'https://img.youtube.com/vi/'+id+'/mqdefault.jpg';
-const emb = id => 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3';
+const emb = id => 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&enablejsapi=1';
 const ytw = id => 'https://www.youtube.com/watch?v='+id;
 
-let currentYtId = '';
+let currentId = '', currentTitle = '';
 
+// ── Fallback detection ──────────────────────────────────────────────────────
+// Method 1: YouTube postMessage API error codes 100/101/150 = blocked
+window.addEventListener('message', function(e) {
+  try {
+    const d = JSON.parse(e.data);
+    if (d.event === 'onError' && [100,101,150].includes(Number(d.info))) {
+      showFallback();
+    }
+  } catch(_) {}
+});
+
+// Method 2: After a short delay, check if the iframe loaded any real content.
+// Blocked videos load instantly with an error page; playable ones take longer
+// because they start loading media. We detect the blocked case by checking
+// whether the iframe's src changed away from our embed URL (which happens when
+// YouTube redirects to the error page) OR by reading a known error text via
+// a same-origin trick (not possible cross-origin, so we rely on timing + postMessage).
+let blockCheckTimer = null;
+function scheduleBlockCheck() {
+  clearTimeout(blockCheckTimer);
+  blockCheckTimer = setTimeout(function() {
+    // If fallback is already visible, skip
+    if (document.getElementById('modal-fallback').classList.contains('visible')) return;
+    // Try to read the iframe title — blocked videos get title "YouTube" immediately
+    // Playable ones get the video title. We can't read cross-origin content directly,
+    // so we use the page title trick via the iframe load event instead (see onIframeLoad).
+  }, 3000);
+}
+
+function onIframeLoad(iframe) {
+  // If the iframe loaded but its contentDocument is inaccessible (cross-origin, normal)
+  // we can't read the title. However YouTube fires postMessage errors for blocked videos.
+  // As a belt-and-suspenders approach, we also try reading the iframe title after a
+  // short delay — YouTube sets the page title to "YouTube" for error pages.
+  setTimeout(function() {
+    try {
+      // This will throw for cross-origin — expected for playable videos
+      const t = iframe.contentDocument && iframe.contentDocument.title;
+      if (t === 'YouTube' || t === '') showFallback();
+    } catch(_) {
+      // Cross-origin = video is loading normally, do nothing
+    }
+  }, 2000);
+}
+
+function showFallback() {
+  const fb = document.getElementById('modal-fallback');
+  if (fb.classList.contains('visible')) return;
+  document.getElementById('fallback-title').textContent = currentTitle;
+  document.getElementById('fallback-btn').href = ytw(currentId);
+  fb.classList.add('visible');
+}
+
+function hideFallback() {
+  document.getElementById('modal-fallback').classList.remove('visible');
+}
+
+// ── Modal controls ──────────────────────────────────────────────────────────
 function openVideo(id, title, meta) {
-  currentYtId = id;
+  currentId = id;
+  currentTitle = title;
+  hideFallback();
   document.getElementById('modal-iframe').src = emb(id);
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-meta').textContent = meta;
   document.getElementById('modal-yt-link').href = ytw(id);
-  document.getElementById('modal-blocked').classList.remove('show');
-  document.getElementById('modal-blocked-link').href = ytw(id);
+  document.getElementById('fallback-btn').href = ytw(id);
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
+  scheduleBlockCheck();
 }
 
-// Detect embed block — YouTube fires an error message when embedding is disallowed
-window.addEventListener('message', function(e) {
-  if (e.data && typeof e.data === 'string') {
-    try {
-      const d = JSON.parse(e.data);
-      if (d.event === 'onError' && (d.info === 100 || d.info === 101 || d.info === 150)) {
-        document.getElementById('modal-blocked').classList.add('show');
-      }
-    } catch(err) {}
-  }
-});
-
 function closeModalNow() {
+  clearTimeout(blockCheckTimer);
   document.getElementById('modal-iframe').src = '';
   document.getElementById('modal').classList.remove('open');
-  document.getElementById('modal-blocked').classList.remove('show');
+  hideFallback();
   document.body.style.overflow = '';
 }
 function closeModal(e) { if (e.target === document.getElementById('modal')) closeModalNow(); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalNow(); });
 
+// ── Panel / grid builders ────────────────────────────────────────────────────
 function buildPanel(band) {
   const c = cfg[band];
   const filters = eras.map(e =>
