@@ -20,9 +20,9 @@
   /* Hero */
   .hero{text-align:center;padding:34px 0 20px;border-bottom:1px solid var(--border);position:relative;}
   .hero::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,153,58,0.6),transparent);}
-  .site-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.5em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
-  .hero-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(24px,5vw,52px);letter-spacing:.12em;color:var(--gold);margin-bottom:10px;}
-  .ad-notice{display:inline-block;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:3px;padding:7px 18px;font-size:14px;color:var(--muted);font-style:italic;margin-bottom:14px;line-height:1.5;}
+  .site-label{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.5em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+  .hero-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(32px,6vw,68px);letter-spacing:.12em;color:var(--gold);margin-bottom:10px;}
+  .ad-notice{display:inline-block;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:3px;padding:7px 18px;font-size:15px;color:var(--muted);font-style:italic;margin-bottom:14px;line-height:1.5;}
   .ad-notice strong{font-style:normal;color:var(--text);font-weight:600;}
 
   /* Playback controls */
@@ -34,23 +34,34 @@
   .pb-btn svg{width:13px;height:13px;fill:currentColor;flex-shrink:0;}
   .hero-sub{font-style:italic;font-size:15px;color:var(--muted);}
 
+  /* Band list */
+  .band-list-section{padding:14px 0 0;}
+  .band-list-label{font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FFE033;margin-bottom:10px;text-shadow:0 0 12px rgba(255,224,51,0.4);}
+  .band-list{display:flex;flex-wrap:wrap;gap:6px;max-height:calc(5 * 34px);overflow-y:auto;padding-right:4px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.15) transparent;}
+  .band-list::-webkit-scrollbar{width:4px;}
+  .band-list::-webkit-scrollbar-track{background:transparent;}
+  .band-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+  .band-pill{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:20px;transition:all .2s;white-space:nowrap;}
+  .band-pill:hover{color:var(--text);border-color:rgba(255,255,255,0.4);}
+  .band-pill.active{color:#FFE033;border-color:#FFE033;background:rgba(255,224,51,0.1);font-weight:700;}
+
   /* Filter nav */
   .filter-nav{padding:18px 0 0;}
-  .filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
-  .filter-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);white-space:nowrap;min-width:60px;}
-  .fchip{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:30px;transition:all .2s;white-space:nowrap;}
-  .fchip:hover{color:var(--text);border-color:rgba(255,255,255,0.35);}
-  .fchip.d-all.on,.fchip.d-60s.on,.fchip.d-70s.on,.fchip.d-80s.on,.fchip.d-90s.on{background:rgba(201,153,58,0.15);border-color:var(--gold);color:var(--gold);}
-  .fchip.g-all.on{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.4);color:var(--text);}
-  .fchip.g-classic.on{background:rgba(74,158,204,0.12);border-color:var(--blue);color:var(--blue);}
-  .fchip.g-prog.on{background:rgba(169,120,200,0.12);border-color:var(--purple);color:var(--purple);}
-  .fchip.g-hardrock.on{background:rgba(200,72,72,0.12);border-color:var(--red);color:var(--red);}
-  .fchip.g-metal.on{background:rgba(150,150,150,0.12);border-color:#909090;color:#C0C0C0;}
+  .filter-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .filter-label{font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FFE033;white-space:nowrap;min-width:70px;text-shadow:0 0 12px rgba(255,224,51,0.4);}
+  .fchip{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 18px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:30px;transition:all .2s;white-space:nowrap;}
+  .fchip:hover{color:#FFE033;border-color:#FFE033;background:rgba(255,224,51,0.08);}
+  .fchip.d-all.on,.fchip.d-60s.on,.fchip.d-70s.on,.fchip.d-80s.on,.fchip.d-90s.on{background:rgba(255,224,51,0.12);border-color:#FFE033;color:#FFE033;font-weight:700;text-shadow:0 0 8px rgba(255,224,51,0.5);}
+  .fchip.g-all.on{background:rgba(255,224,51,0.12);border-color:#FFE033;color:#FFE033;font-weight:700;text-shadow:0 0 8px rgba(255,224,51,0.5);}
+  .fchip.g-classic.on{background:rgba(255,224,51,0.12);border-color:#FFE033;color:#FFE033;font-weight:700;text-shadow:0 0 8px rgba(255,224,51,0.5);}
+  .fchip.g-prog.on{background:rgba(255,224,51,0.12);border-color:#FFE033;color:#FFE033;font-weight:700;text-shadow:0 0 8px rgba(255,224,51,0.5);}
+  .fchip.g-hardrock.on{background:rgba(255,224,51,0.12);border-color:#FFE033;color:#FFE033;font-weight:700;text-shadow:0 0 8px rgba(255,224,51,0.5);}
+  .fchip.g-metal.on{background:rgba(255,224,51,0.12);border-color:#FFE033;color:#FFE033;font-weight:700;text-shadow:0 0 8px rgba(255,224,51,0.5);}
 
   /* Results bar */
   .results-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px;border-bottom:1px solid var(--border);margin-bottom:18px;flex-wrap:wrap;gap:8px;}
-  .results-count{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
-  .results-label{font-size:14px;color:var(--muted);font-style:italic;}
+  .results-count{font-family:'Cinzel',serif;font-size:14px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#FFE033;}
+  .results-label{font-size:15px;color:var(--muted);font-style:italic;}
 
   /* Grid */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px;}
@@ -191,6 +202,12 @@
       <button class="fchip g-hardrock" onclick="setFilter('genre','hardrock',this)">Hard Rock</button>
       <button class="fchip g-metal"    onclick="setFilter('genre','metal',this)">Metal</button>
     </div>
+  </div>
+
+  <!-- Band list -->
+  <div class="band-list-section">
+    <div class="band-list-label">Bands</div>
+    <div class="band-list" id="band-list"></div>
   </div>
 
   <div class="results-bar">
@@ -480,13 +497,14 @@ const GENRE_COLOR = {classic:'#4A9ECC', prog:'#A978C8', hardrock:'#C84848', meta
 const DECADE_COLOR = '#C9993A';
 
 /* ═══ FILTER STATE ════════════════════════════ */
-let activeDec = 'all', activeGen = 'all';
+let activeDec = 'all', activeGen = 'all', activeBand = 'all';
 let queue = [], queueIdx = -1, autoplayOn = false, currentId = '', currentTitle = '';
 
 function getFiltered(){
   return ALL.filter(v =>
     (activeDec === 'all' || v.decade === activeDec) &&
-    (activeGen === 'all' || v.genre === activeGen)
+    (activeGen === 'all' || v.genre === activeGen) &&
+    (activeBand === 'all' || v.band === activeBand)
   );
 }
 
@@ -502,6 +520,32 @@ function setFilter(type, val, btn){
   renderGrid();
 }
 
+function setBandFilter(band, pill){
+  activeBand = band;
+  document.querySelectorAll('.band-pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  renderGrid();
+}
+
+/* Build band pill list */
+function buildBandList(){
+  const bands = [...new Set(ALL.map(v => v.band))].sort();
+  const container = document.getElementById('band-list');
+  // "All Bands" pill first
+  const allPill = document.createElement('button');
+  allPill.className = 'band-pill active';
+  allPill.textContent = 'All Bands';
+  allPill.onclick = () => setBandFilter('all', allPill);
+  container.appendChild(allPill);
+  bands.forEach(band => {
+    const pill = document.createElement('button');
+    pill.className = 'band-pill';
+    pill.textContent = band;
+    pill.onclick = () => setBandFilter(band, pill);
+    container.appendChild(pill);
+  });
+}
+
 /* ═══ GRID RENDERER ══════════════════════════ */
 const th  = id => 'https://img.youtube.com/vi/'+id+'/mqdefault.jpg';
 const emb = id => 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&enablejsapi=1';
@@ -511,7 +555,8 @@ function renderGrid(){
   const list = getFiltered();
   const decLabel = activeDec === 'all' ? 'All decades' : activeDec;
   const genLabel = activeGen === 'all' ? 'All genres' : GENRE_LABEL[activeGen];
-  document.getElementById('results-label').textContent = decLabel + ' · ' + genLabel;
+  const bandLabel = activeBand === 'all' ? '' : ' · ' + activeBand;
+  document.getElementById('results-label').textContent = decLabel + ' · ' + genLabel + bandLabel;
   document.getElementById('results-count').textContent = list.length + ' video' + (list.length !== 1 ? 's' : '');
 
   if(list.length === 0){
@@ -566,6 +611,7 @@ function closeModal(e){ if(e.target===document.getElementById('modal')) closeMod
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModalNow(); if(e.key==='ArrowRight') playAdjacentVideo(1); if(e.key==='ArrowLeft') playAdjacentVideo(-1); });
 
 /* Init */
+buildBandList();
 renderGrid();
 </script>
 </body>
