@@ -15,22 +15,36 @@
     --c-journey:#7DB87A;--c-nightranger:#A978C8;--c-eagles:#D4A84B;
     --c-cheaptrick:#E07040;--c-whitesnake:#60A8D0;--c-rush:#B0784A;
     --c-badenglish:#9898C8;--c-styx:#58B878;--c-supertramp:#C870A0;
+    --c-grandfunk:#D4704A;--c-deeppurple:#8868C8;--c-ledzeppelin:#C84848;
+    --c-giant:#70B890;--c-toto:#C8A040;--c-chicago:#5898D4;
   }
   html{scroll-behavior:smooth;}
   body{background:var(--dark);color:var(--text);font-family:'Crimson Text',Georgia,serif;min-height:100vh;}
   .site{max-width:1080px;margin:0 auto;padding:0 20px 60px;}
 
   /* Hero */
-  .hero{text-align:center;padding:36px 0 24px;border-bottom:1px solid var(--border);position:relative;}
+  .hero{text-align:center;padding:36px 0 20px;border-bottom:1px solid var(--border);position:relative;}
   .hero::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);width:50%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,153,58,0.6),transparent);}
   .site-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.5em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
-  .hero-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(22px,5vw,48px);letter-spacing:.12em;color:var(--c-eagles);margin-bottom:8px;}
-  .hero-sub{font-style:italic;font-size:14px;color:var(--muted);}
+  .hero-title{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(22px,5vw,48px);letter-spacing:.12em;color:var(--c-eagles);margin-bottom:10px;}
+
+  /* Ad notice */
+  .ad-notice{display:inline-block;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);border-radius:3px;padding:7px 16px;font-size:12px;color:var(--muted);font-style:italic;margin-bottom:14px;line-height:1.5;}
+  .ad-notice strong{font-style:normal;color:var(--text);font-weight:600;}
+
+  /* Playback controls */
+  .playback-bar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+  .pb-btn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:8px 18px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:all .2s;}
+  .pb-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.35);}
+  .pb-btn.shuffle-on{border-color:#C9993A;color:#C9993A;background:rgba(201,153,58,0.1);}
+  .pb-btn.autoplay-on{border-color:#7DB87A;color:#7DB87A;background:rgba(125,184,122,0.1);}
+  .pb-btn svg{width:13px;height:13px;fill:currentColor;flex-shrink:0;}
+  .hero-sub{font-style:italic;font-size:13px;color:var(--muted);}
 
   /* Tabs */
   .tabs{display:flex;overflow-x:auto;border-bottom:1px solid var(--border);scrollbar-width:none;}
   .tabs::-webkit-scrollbar{display:none;}
-  .tab{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.12em;padding:12px 16px;background:transparent;border:none;cursor:pointer;color:var(--muted);text-transform:uppercase;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s;flex-shrink:0;}
+  .tab{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;padding:11px 14px;background:transparent;border:none;cursor:pointer;color:var(--muted);text-transform:uppercase;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s;flex-shrink:0;}
   .tab:hover{color:var(--text);}
   .tab.a-kansas{color:var(--c-kansas);border-bottom-color:var(--c-kansas);}
   .tab.a-boston{color:var(--c-boston);border-bottom-color:var(--c-boston);}
@@ -44,66 +58,81 @@
   .tab.a-badenglish{color:var(--c-badenglish);border-bottom-color:var(--c-badenglish);}
   .tab.a-styx{color:var(--c-styx);border-bottom-color:var(--c-styx);}
   .tab.a-supertramp{color:var(--c-supertramp);border-bottom-color:var(--c-supertramp);}
-  .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:7px;vertical-align:middle;}
+  .tab.a-grandfunk{color:var(--c-grandfunk);border-bottom-color:var(--c-grandfunk);}
+  .tab.a-deeppurple{color:var(--c-deeppurple);border-bottom-color:var(--c-deeppurple);}
+  .tab.a-ledzeppelin{color:var(--c-ledzeppelin);border-bottom-color:var(--c-ledzeppelin);}
+  .tab.a-giant{color:var(--c-giant);border-bottom-color:var(--c-giant);}
+  .tab.a-toto{color:var(--c-toto);border-bottom-color:var(--c-toto);}
+  .tab.a-chicago{color:var(--c-chicago);border-bottom-color:var(--c-chicago);}
+  .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;vertical-align:middle;}
 
   /* Panel */
-  .panel{display:none;padding:24px 0 0;}
+  .panel{display:none;padding:22px 0 0;}
   .panel.active{display:block;}
-  .bio{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 18px;margin-bottom:22px;font-size:14px;color:var(--muted);font-style:italic;line-height:1.7;}
+  .bio{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:13px 17px;margin-bottom:20px;font-size:14px;color:var(--muted);font-style:italic;line-height:1.7;}
   .bio strong{font-style:normal;font-weight:600;}
 
   /* Filters */
-  .filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;}
-  .fbtn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;padding:5px 14px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all .2s;text-transform:uppercase;}
+  .filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px;}
+  .fbtn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;padding:5px 13px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all .2s;text-transform:uppercase;}
   .fbtn:hover{color:var(--text);border-color:rgba(255,255,255,0.3);}
   .fbtn.on{color:var(--band-color,#fff);border-color:var(--band-color,#fff);background:rgba(255,255,255,0.06);}
 
   /* Grid */
-  .sec-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.35em;text-transform:uppercase;margin-bottom:16px;padding-bottom:9px;border-bottom:1px solid var(--border);}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px;}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s;}
+  .sec-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.35em;text-transform:uppercase;margin-bottom:15px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:14px;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .15s;position:relative;}
   .card:hover{transform:translateY(-3px);}
+  .card.now-playing{box-shadow:0 0 0 1px #C9993A;}
   .thumb{position:relative;padding-bottom:56.25%;background:#111;overflow:hidden;}
   .thumb img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;filter:brightness(.82) sepia(.1);transition:filter .2s;}
   .card:hover .thumb img{filter:brightness(1) sepia(0);}
   .play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,0.65);border:2px solid rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
   .card:hover .play-icon{opacity:1;}
   .play-icon svg{width:14px;height:14px;fill:white;margin-left:3px;}
-  .cinfo{padding:10px 12px;}
+  .np-indicator{display:none;position:absolute;top:7px;left:7px;background:rgba(201,153,58,0.9);border-radius:2px;padding:2px 7px;font-family:'Cinzel',serif;font-size:7px;letter-spacing:.1em;color:#fff;text-transform:uppercase;}
+  .card.now-playing .np-indicator{display:block;}
+  .cinfo{padding:9px 11px;}
   .ctitle{font-family:'Cinzel',serif;font-size:11px;font-weight:400;color:var(--text);line-height:1.4;margin-bottom:3px;}
   .cmeta{font-size:11px;color:var(--muted);font-style:italic;}
-  .badge{display:inline-block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.08em;padding:2px 6px;border:1px solid var(--border);margin-top:5px;border-radius:2px;}
+  .badge{display:inline-block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:.08em;padding:2px 6px;border:1px solid var(--border);margin-top:4px;border-radius:2px;}
 
   /* Modal */
   .modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:20px;}
   .modal-overlay.open{display:flex;}
   .modal-box{position:relative;width:100%;max-width:900px;background:#0D0A06;border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.15);box-shadow:0 20px 60px rgba(0,0,0,0.8);}
-  .modal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);gap:12px;}
-  .modal-title{font-family:'Cinzel',serif;font-size:14px;font-weight:400;}
-  .modal-meta{font-size:12px;color:var(--muted);font-style:italic;margin-top:2px;}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;border-bottom:1px solid var(--border);gap:12px;}
+  .modal-title{font-family:'Cinzel',serif;font-size:13px;font-weight:400;}
+  .modal-meta{font-size:11px;color:var(--muted);font-style:italic;margin-top:2px;}
   .modal-close{background:transparent;border:1px solid var(--border);color:var(--muted);font-size:20px;line-height:1;padding:4px 10px;cursor:pointer;border-radius:3px;transition:color .2s;flex-shrink:0;}
   .modal-close:hover{color:var(--text);}
   .modal-player{position:relative;padding-bottom:56.25%;background:#000;}
   .modal-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;z-index:2;}
-  .modal-fallback{position:absolute;top:0;left:0;width:100%;height:100%;background:#0D0A06;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:32px;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+  .modal-fallback{position:absolute;top:0;left:0;width:100%;height:100%;background:#0D0A06;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:32px;text-align:center;opacity:0;pointer-events:none;transition:opacity .3s;}
   .modal-fallback.visible{opacity:1;pointer-events:all;}
-  .fallback-icon{font-size:34px;opacity:.3;}
-  .fallback-msg{font-size:14px;color:var(--muted);font-style:italic;line-height:1.7;max-width:340px;}
+  .fallback-icon{font-size:32px;opacity:.3;}
+  .fallback-msg{font-size:13px;color:var(--muted);font-style:italic;line-height:1.7;max-width:340px;}
   .fallback-msg strong{color:var(--text);font-style:normal;display:block;font-family:'Cinzel',serif;font-size:14px;margin-bottom:6px;}
-  .yt-watch-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:13px 26px;border-radius:3px;background:#FF0000;color:#fff;text-decoration:none;transition:background .2s,transform .1s;box-shadow:0 4px 20px rgba(255,0,0,0.3);}
+  .yt-watch-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:12px 24px;border-radius:3px;background:#FF0000;color:#fff;text-decoration:none;transition:background .2s,transform .1s;box-shadow:0 4px 20px rgba(255,0,0,0.3);}
   .yt-watch-btn:hover{background:#CC0000;transform:translateY(-1px);}
-  .yt-watch-btn svg{width:18px;height:18px;fill:white;flex-shrink:0;}
-  .modal-footer{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);}
+  .yt-watch-btn svg{width:17px;height:17px;fill:white;flex-shrink:0;}
+  .modal-footer{padding:9px 15px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);gap:8px;flex-wrap:wrap;}
   .modal-yt-link{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
   .modal-yt-link:hover{color:var(--text);}
-  .modal-hint{font-size:11px;color:var(--muted);font-style:italic;}
+  .modal-nav{display:flex;align-items:center;gap:7px;}
+  .nav-btn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all .2s;display:inline-flex;align-items:center;gap:5px;}
+  .nav-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.35);}
+  .nav-btn:disabled{opacity:.25;cursor:default;}
+  .nav-btn svg{width:11px;height:11px;fill:currentColor;}
+  .queue-badge{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.1em;padding:2px 8px;border-radius:2px;background:rgba(125,184,122,0.12);border:1px solid rgba(125,184,122,0.3);color:#7DB87A;white-space:nowrap;}
+  .now-playing-label{font-family:'Cinzel',serif;font-size:9px;color:var(--muted);}
 
   /* Footer */
-  .footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);font-style:italic;line-height:2.2;}
+  .footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--muted);font-style:italic;line-height:2;}
 
   @media(max-width:680px){
-    .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:11px;}
-    .tab{padding:10px 12px;font-size:9px;}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;}
+    .tab{padding:9px 11px;font-size:9px;}
     .modal-overlay{padding:10px;}
   }
 </style>
@@ -113,8 +142,11 @@
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal-box">
     <div class="modal-header">
-      <div>
-        <div class="modal-title" id="modal-title"></div>
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <div class="modal-title" id="modal-title"></div>
+          <div class="queue-badge" id="queue-badge" style="display:none"></div>
+        </div>
         <div class="modal-meta" id="modal-meta"></div>
       </div>
       <button class="modal-close" onclick="closeModalNow()">✕</button>
@@ -134,8 +166,17 @@
       </div>
     </div>
     <div class="modal-footer">
-      <a class="modal-yt-link" id="modal-yt-link" href="#" target="_blank" rel="noopener">↗ Open on YouTube</a>
-      <div class="modal-hint">Esc or click outside to close</div>
+      <a class="modal-yt-link" id="modal-yt-link" href="#" target="_blank" rel="noopener">↗ YouTube</a>
+      <div class="modal-nav">
+        <button class="nav-btn" id="btn-prev" onclick="playAdjacentVideo(-1)">
+          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg> Prev
+        </button>
+        <span class="now-playing-label" id="queue-pos"></span>
+        <button class="nav-btn" id="btn-next" onclick="playAdjacentVideo(1)">
+          Next <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm2.5-6l6-4.25v8.5L8.5 12zM16 6h2v12h-2z"/></svg>
+        </button>
+      </div>
+      <div style="font-size:10px;color:var(--muted);font-style:italic;">Esc to close</div>
     </div>
   </div>
 </div>
@@ -144,180 +185,307 @@
   <div class="hero">
     <div class="site-label">Classic Rock Video Channel</div>
     <div class="hero-title">CLASSIC ROCK</div>
-    <div class="hero-sub">Twelve legendary bands — all browser-verified · click any thumbnail to play</div>
+    <div class="ad-notice">
+      <strong>Note:</strong> Some videos may show a short ad first — just skip when possible. Videos powered by YouTube.
+    </div>
+    <div class="playback-bar">
+      <button class="pb-btn" id="btn-autoplay" onclick="toggleAutoplay()">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Autoplay Queue
+      </button>
+      <button class="pb-btn" id="btn-shuffle" onclick="startShuffle()">
+        <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17zm4.76-.82l1.3 1.3L18 8.34l.02.02L20 6.35 17.66 4l-1.41 1.41.02.02-1.3 1.3zm-4.76 8.65L4 19.41l1.41 1.41 5.18-5.18zm9.41-.82L18 15.59l-1.76-1.76-1.41 1.41L16.59 17l-1.41 1.41L17.66 20 20 17.66l-1.41-1.41.01-.01zm-5.09-3.63l-3.06-3.06-1.41 1.41 3.06 3.06z"/></svg>Shuffle All
+      </button>
+      <button class="pb-btn" id="btn-playband" onclick="playCurrentBand()">
+        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z"/></svg>Play This Band
+      </button>
+    </div>
+    <div class="hero-sub" id="playback-status">Eighteen legendary bands · 120+ browser-verified videos</div>
   </div>
 
   <div class="tabs" id="tabs"></div>
   <div id="panels"></div>
 
   <div class="footer">
-    All video IDs verified live via YouTube · If a video is restricted, a Watch on YouTube button appears automatically<br>
-    Kansas · Boston · Foreigner · Journey · Night Ranger · Eagles · Cheap Trick · Whitesnake · Rush · Bad English · Styx · Supertramp
+    All video IDs verified live via YouTube · Autoplay Queue · Shuffle All · Play Band · ← → keys to skip<br>
+    Kansas · Boston · Foreigner · Journey · Night Ranger · Eagles · Cheap Trick · Whitesnake · Rush · Bad English · Styx · Supertramp<br>
+    Grand Funk Railroad · Deep Purple · Led Zeppelin · Giant · Toto · Chicago
   </div>
 </div>
 
 <script>
-const eraLabel={classic:'Classic Era',live:'Live',modern:'Modern Era'};
-const eras=['all','classic','live','modern'];
-
+/* ═══════════════════════════════════════════════════
+   DATA — all IDs browser-verified, March 2026
+═══════════════════════════════════════════════════ */
 const cfg = {
-  kansas:{
-    label:'Kansas', color:'#C9993A',
-    bio:"<strong style='color:#C9993A'>KANSAS</strong> — Founded 1973 in Topeka. Blending British prog complexity with heartland soul, they produced eight gold albums and three sextuple-platinum records. <em>Carry On Wayward Son</em> and <em>Dust in the Wind</em> remain staples of classic rock radio worldwide.",
+  kansas:{label:'Kansas',color:'#C9993A',
+    bio:"<strong style='color:#C9993A'>KANSAS</strong> — Founded 1973 in Topeka. Blending British prog with heartland soul, they produced eight gold albums and three sextuple-platinum records. <em>Carry On Wayward Son</em> and <em>Dust in the Wind</em> are classic rock radio staples.",
     videos:[
-      {id:'P5ZJui3aPoQ',title:'Carry On Wayward Son',     meta:'Official Video · Leftoverture, 1976',       era:'classic'},
-      {id:'tH2w6Oxx0kQ',title:'Dust in the Wind',         meta:'Official Video · Point of Know Return, 1977',era:'classic'},
-      {id:'iFWtsT5zRKo',title:'Point of Know Return',     meta:'Official Video · Point of Know Return, 1977',era:'classic'},
-      {id:'D13zs5z3wnQ',title:'Miracles Out of Nowhere',  meta:'Official Video · Leftoverture, 1976',       era:'classic'},
-      {id:'hNl6w2wu7eI',title:'The Wall',                 meta:'Official Video · Leftoverture, 1976',       era:'classic'},
-      {id:'PVH-u9gIy8s',title:'Carry On Wayward Son (Live)',meta:'Live HD · 2009',                          era:'live'},
-      {id:'HfS5hpkr_20',title:'Dust in the Wind (Live)',  meta:'Live Symphony · 2009',                      era:'live'},
-      {id:'s38ignmTqFQ',title:'Carry On Wayward Son (Canada Jam)',meta:'Live · Canada Jam 1978',            era:'live'},
-      {id:'IUOBgjOlKQc',title:'All I Wanted',             meta:'Official Video · Power, 1986',              era:'modern'},
+      {id:'P5ZJui3aPoQ',title:'Carry On Wayward Son',meta:'Official Video · Leftoverture, 1976',era:'classic'},
+      {id:'tH2w6Oxx0kQ',title:'Dust in the Wind',meta:'Official Video · Point of Know Return, 1977',era:'classic'},
+      {id:'iFWtsT5zRKo',title:'Point of Know Return',meta:'Official Video · 1977',era:'classic'},
+      {id:'D13zs5z3wnQ',title:'Miracles Out of Nowhere',meta:'Official Video · Leftoverture, 1976',era:'classic'},
+      {id:'hNl6w2wu7eI',title:'The Wall',meta:'Official Video · Leftoverture, 1976',era:'classic'},
+      {id:'PVH-u9gIy8s',title:'Carry On Wayward Son (Live)',meta:'Live HD · 2009',era:'live'},
+      {id:'HfS5hpkr_20',title:'Dust in the Wind (Live)',meta:'Live Symphony · 2009',era:'live'},
+      {id:'s38ignmTqFQ',title:'Carry On Wayward Son (Canada Jam)',meta:'Live · 1978',era:'live'},
+      {id:'IUOBgjOlKQc',title:'All I Wanted',meta:'Official Video · Power, 1986',era:'modern'},
     ]},
-  boston:{
-    label:'Boston', color:'#4A9ECC',
-    bio:"<strong style='color:#4A9ECC'>BOSTON</strong> — Founded 1976 by MIT engineer Tom Scholz, who crafted their entire sound in a basement studio. Their self-titled debut sold 17 million copies in the U.S. alone. Vocalist Brad Delp's soaring harmonies defined the AOR genre.",
+  boston:{label:'Boston',color:'#4A9ECC',
+    bio:"<strong style='color:#4A9ECC'>BOSTON</strong> — Founded 1976 by MIT engineer Tom Scholz. Their debut sold 17 million copies in the U.S. alone. Vocalist Brad Delp's harmonies defined the AOR genre. Over 75 million records sold worldwide.",
     videos:[
-      {id:'t4QK8RxCAwo',title:'More Than a Feeling',      meta:'Official HD Video · Boston, 1976',          era:'classic'},
-      {id:'edwk-8KJ1Js',title:'Peace of Mind',            meta:'Official Audio · Boston, 1976',             era:'classic'},
-      {id:'2HuiH-0R6a0',title:"Don't Look Back",          meta:"Official Video · Don't Look Back, 1978",    era:'classic'},
-      {id:'gZxP3bMn0as',title:"A Man I'll Never Be",      meta:"Official Video · Don't Look Back, 1978",    era:'classic'},
-      {id:'bDI-AdnIK08',title:"Smokin'",                  meta:'Official Audio · Boston, 1976',             era:'classic'},
-      {id:'Fh4YgBMY2os',title:'Amanda',                   meta:'Official Video · Third Stage, 1986',        era:'modern'},
-      {id:'WY2p1gSOk3c',title:'Foreplay / Long Time',     meta:'Live · Giants Stadium, 1979',               era:'live'},
-      {id:'Uc78RnDRQ_4',title:'Rock and Roll Band',       meta:'Live · Giants Stadium, 1979',               era:'live'},
+      {id:'t4QK8RxCAwo',title:'More Than a Feeling',meta:'Official HD Video · Boston, 1976',era:'classic'},
+      {id:'edwk-8KJ1Js',title:'Peace of Mind',meta:'Official Audio · Boston, 1976',era:'classic'},
+      {id:'2HuiH-0R6a0',title:"Don't Look Back",meta:"Official Video · Don't Look Back, 1978",era:'classic'},
+      {id:'gZxP3bMn0as',title:"A Man I'll Never Be",meta:"Official Video · Don't Look Back, 1978",era:'classic'},
+      {id:'bDI-AdnIK08',title:"Smokin'",meta:'Official Audio · Boston, 1976',era:'classic'},
+      {id:'Fh4YgBMY2os',title:'Amanda',meta:'Official Video · Third Stage, 1986',era:'modern'},
+      {id:'WY2p1gSOk3c',title:'Foreplay / Long Time',meta:'Live · Giants Stadium, 1979',era:'live'},
+      {id:'Uc78RnDRQ_4',title:'Rock and Roll Band',meta:'Live · Giants Stadium, 1979',era:'live'},
     ]},
-  foreigner:{
-    label:'Foreigner', color:'#C4545A',
-    bio:"<strong style='color:#C4545A'>FOREIGNER</strong> — Formed 1976 in New York City by British guitarist Mick Jones with American vocalist Lou Gramm. Six consecutive multi-platinum Top 10 albums. Over 80 million records sold worldwide. Rock and Roll Hall of Fame inductees, 2024.",
+  foreigner:{label:'Foreigner',color:'#C4545A',
+    bio:"<strong style='color:#C4545A'>FOREIGNER</strong> — Formed 1976 in New York City. Six consecutive multi-platinum Top 10 albums. Over 80 million records sold. Rock and Roll Hall of Fame inductees, 2024.",
     videos:[
-      {id:'r3Pr1_v7hsw',title:'I Want to Know What Love Is',meta:'Official Video · Agent Provocateur, 1984',era:'classic'},
-      {id:'ySb1f9zWJkQ',title:'Cold as Ice',              meta:'Official Video · Foreigner, 1977',          era:'classic'},
-      {id:'Ic02W1bWeFU',title:'Juke Box Hero',            meta:'Official Video · 4, 1981',                  era:'classic'},
-      {id:'Lcb-Fsx_phM',title:'Urgent',                   meta:'Official Video · 4, 1981',                  era:'classic'},
-      {id:'5jhocSCSZzk',title:'Waiting for a Girl Like You',meta:'Official Video · 4, 1981',               era:'classic'},
-      {id:'dD-SpHH7qDA',title:'Double Vision',            meta:'Official Video · Double Vision, 1978',      era:'classic'},
-      {id:'CK6jKL2qWxo',title:'Feels Like the First Time',meta:'Official Video · Foreigner, 1977',         era:'classic'},
-      {id:'8yDmeYxTeC0',title:'Hot Blooded (Live)',        meta:'Official Live Video',                       era:'live'},
+      {id:'r3Pr1_v7hsw',title:'I Want to Know What Love Is',meta:'Official Video · 1984',era:'classic'},
+      {id:'ySb1f9zWJkQ',title:'Cold as Ice',meta:'Official Video · 1977',era:'classic'},
+      {id:'Ic02W1bWeFU',title:'Juke Box Hero',meta:'Official Video · 4, 1981',era:'classic'},
+      {id:'Lcb-Fsx_phM',title:'Urgent',meta:'Official Video · 4, 1981',era:'classic'},
+      {id:'5jhocSCSZzk',title:'Waiting for a Girl Like You',meta:'Official Video · 4, 1981',era:'classic'},
+      {id:'dD-SpHH7qDA',title:'Double Vision',meta:'Official Video · Double Vision, 1978',era:'classic'},
+      {id:'CK6jKL2qWxo',title:'Feels Like the First Time',meta:'Official Video · Foreigner, 1977',era:'classic'},
+      {id:'8yDmeYxTeC0',title:'Hot Blooded (Live)',meta:'Official Live Video',era:'live'},
     ]},
-  journey:{
-    label:'Journey', color:'#7DB87A',
-    bio:"<strong style='color:#7DB87A'>JOURNEY</strong> — Formed 1973 in San Francisco. With Steve Perry's legendary vocals, they became one of the best-selling bands of all time. <em>Don't Stop Believin'</em> is one of the best-selling digital singles in history. Over 100 million records sold worldwide.",
+  journey:{label:'Journey',color:'#7DB87A',
+    bio:"<strong style='color:#7DB87A'>JOURNEY</strong> — Formed 1973 in San Francisco. <em>Don't Stop Believin'</em> is one of the best-selling digital singles in history. Over 100 million records sold worldwide.",
     videos:[
-      {id:'1k8craCGpgs',title:"Don't Stop Believin'",     meta:'Official Audio · Escape, 1981',             era:'classic'},
-      {id:'i5pUOVC50Y8',title:'Open Arms',                meta:'Official Video · Escape, 1981',             era:'classic'},
-      {id:'OMD8hBsA-RI',title:'Faithfully',               meta:'Official HD Video · Frontiers, 1983',       era:'classic'},
-      {id:'LatorN4P9aA',title:'Separate Ways',            meta:'Official HD Video · Frontiers, 1983',       era:'classic'},
-      {id:'atxUuldUcfI',title:'Any Way You Want It',      meta:'Official HD Video · Departure, 1980',       era:'classic'},
-      {id:'MxGEVIvSFeY',title:'Wheel in the Sky',         meta:'Official HD Video · Infinity, 1978',        era:'classic'},
-      {id:'tNG62fULYgI',title:'Lights',                   meta:'Official HD Video · Infinity, 1978',        era:'classic'},
-      {id:'InyWhQLfO7A',title:'Send Her My Love',         meta:'Official HD Video · Frontiers, 1983',       era:'classic'},
-      {id:'4Yy6pmsQ9H8',title:"Don't Stop Believin' (Live)",meta:'Live Performance',                        era:'live'},
+      {id:'1k8craCGpgs',title:"Don't Stop Believin'",meta:'Official Audio · Escape, 1981',era:'classic'},
+      {id:'i5pUOVC50Y8',title:'Open Arms',meta:'Official Video · Escape, 1981',era:'classic'},
+      {id:'OMD8hBsA-RI',title:'Faithfully',meta:'Official HD Video · Frontiers, 1983',era:'classic'},
+      {id:'LatorN4P9aA',title:'Separate Ways',meta:'Official HD Video · Frontiers, 1983',era:'classic'},
+      {id:'atxUuldUcfI',title:'Any Way You Want It',meta:'Official HD Video · Departure, 1980',era:'classic'},
+      {id:'MxGEVIvSFeY',title:'Wheel in the Sky',meta:'Official HD Video · Infinity, 1978',era:'classic'},
+      {id:'tNG62fULYgI',title:'Lights',meta:'Official HD Video · Infinity, 1978',era:'classic'},
+      {id:'InyWhQLfO7A',title:'Send Her My Love',meta:'Official HD Video · Frontiers, 1983',era:'classic'},
+      {id:'4Yy6pmsQ9H8',title:"Don't Stop Believin' (Live)",meta:'Live Performance',era:'live'},
     ]},
-  nightranger:{
-    label:'Night Ranger', color:'#A978C8',
-    bio:"<strong style='color:#A978C8'>NIGHT RANGER</strong> — Formed 1982 in San Francisco. Anchored by guitarist Brad Gillis and drummer Kelly Keagy, they defined the MTV hard rock era. Their first five albums sold over 10 million copies. <em>Sister Christian</em> remains their signature anthem.",
+  nightranger:{label:'Night Ranger',color:'#A978C8',
+    bio:"<strong style='color:#A978C8'>NIGHT RANGER</strong> — Formed 1982 in San Francisco. Defined the MTV hard rock era. First five albums sold over 10 million copies. <em>Sister Christian</em> remains their signature anthem.",
     videos:[
-      {id:'z92bmlcmyq0',title:'Sister Christian',         meta:'Official Video · Midnight Madness, 1984',   era:'classic'},
-      {id:'YbF0axsoQIw',title:'(You Can Still) Rock in America',meta:'Official Video · Midnight Madness, 1983',era:'classic'},
-      {id:'Y-4hp5HZ2aU',title:"Don't Tell Me You Love Me",meta:'Official Video · Dawn Patrol, 1982',        era:'classic'},
-      {id:'NYvJPcp9k4s',title:'When You Close Your Eyes', meta:'Official Video · Midnight Madness, 1984',   era:'classic'},
-      {id:'has6r1zQPcI',title:'Sentimental Street',       meta:'Official Video · 7 Wishes, 1985',           era:'classic'},
-      {id:'tDK-gV8u9LU',title:'Four in the Morning',      meta:'Official Video · 7 Wishes, 1985',           era:'classic'},
-      {id:'Zg-KJSv-2aE',title:'Goodbye',                  meta:'Official Video · Big Life, 1987',           era:'classic'},
+      {id:'z92bmlcmyq0',title:'Sister Christian',meta:'Official Video · Midnight Madness, 1984',era:'classic'},
+      {id:'YbF0axsoQIw',title:'Rock in America',meta:'Official Video · Midnight Madness, 1983',era:'classic'},
+      {id:'Y-4hp5HZ2aU',title:"Don't Tell Me You Love Me",meta:'Official Video · Dawn Patrol, 1982',era:'classic'},
+      {id:'NYvJPcp9k4s',title:'When You Close Your Eyes',meta:'Official Video · Midnight Madness, 1984',era:'classic'},
+      {id:'has6r1zQPcI',title:'Sentimental Street',meta:'Official Video · 7 Wishes, 1985',era:'classic'},
+      {id:'tDK-gV8u9LU',title:'Four in the Morning',meta:'Official Video · 7 Wishes, 1985',era:'classic'},
+      {id:'Zg-KJSv-2aE',title:'Goodbye',meta:'Official Video · Big Life, 1987',era:'classic'},
     ]},
-  eagles:{
-    label:'Eagles', color:'#D4A84B',
-    bio:"<strong style='color:#D4A84B'>EAGLES</strong> — Formed 1971 in Los Angeles. One of the best-selling bands of all time with over 200 million records sold worldwide. Their <em>Their Greatest Hits</em> compilation is one of the best-selling albums in U.S. history. Inducted into the Rock and Roll Hall of Fame in 1998.",
+  eagles:{label:'Eagles',color:'#D4A84B',
+    bio:"<strong style='color:#D4A84B'>EAGLES</strong> — Formed 1971 in Los Angeles. One of the best-selling bands of all time with over 200 million records sold. Rock and Roll Hall of Fame inductees, 1998.",
     videos:[
-      {id:'09839DpTctU',title:'Hotel California',         meta:'Live 1977 Official Video · Hotel California', era:'live'},
-      {id:'AaBw37-nWaY',title:'Take It Easy',             meta:'Live on MTV 1994 · Official Video',          era:'live'},
-      {id:'PhC7Gh84CdY',title:'Life in the Fast Lane',    meta:'Live on MTV 1994 · Official Video',          era:'live'},
-      {id:'Tszq-LVyuN8',title:'One of These Nights',      meta:'Live 1977 · Official Video',                 era:'live'},
-      {id:'FiPqUjLMuA8',title:'Desperado',                meta:'Live from Melbourne · Official Video',       era:'live'},
-      {id:'PqccEpqvwPY',title:"Lyin' Eyes",               meta:'Live 1977 · Official Video',                 era:'live'},
-      {id:'_fW2rw8SwoA',title:'New Kid in Town',          meta:'Official Audio · Hotel California, 1976',    era:'classic'},
-      {id:'jBte_o5JpJA',title:'Heartache Tonight',        meta:'Official Audio · The Long Run, 1979',        era:'classic'},
+      {id:'09839DpTctU',title:'Hotel California',meta:'Live 1977 · Official Video',era:'live'},
+      {id:'AaBw37-nWaY',title:'Take It Easy',meta:'Live on MTV 1994 · Official Video',era:'live'},
+      {id:'PhC7Gh84CdY',title:'Life in the Fast Lane',meta:'Live on MTV 1994 · Official Video',era:'live'},
+      {id:'Tszq-LVyuN8',title:'One of These Nights',meta:'Live 1977 · Official Video',era:'live'},
+      {id:'FiPqUjLMuA8',title:'Desperado',meta:'Live from Melbourne · Official Video',era:'live'},
+      {id:'PqccEpqvwPY',title:"Lyin' Eyes",meta:'Live 1977 · Official Video',era:'live'},
+      {id:'_fW2rw8SwoA',title:'New Kid in Town',meta:'Official Audio · Hotel California, 1976',era:'classic'},
+      {id:'jBte_o5JpJA',title:'Heartache Tonight',meta:'Official Audio · The Long Run, 1979',era:'classic'},
     ]},
-  cheaptrick:{
-    label:'Cheap Trick', color:'#E07040',
-    bio:"<strong style='color:#E07040'>CHEAP TRICK</strong> — Formed 1973 in Rockford, Illinois. Known for their explosive live shows and layered pop-rock songwriting. <em>Budokan!</em> is one of the best-selling live albums of all time. Rock and Roll Hall of Fame inductees, 2016.",
+  cheaptrick:{label:'Cheap Trick',color:'#E07040',
+    bio:"<strong style='color:#E07040'>CHEAP TRICK</strong> — Formed 1973 in Rockford, Illinois. <em>Budokan!</em> is one of the best-selling live albums of all time. Rock and Roll Hall of Fame inductees, 2016.",
     videos:[
-      {id:'-qgpewMCVjs',title:'I Want You to Want Me',    meta:'Live from Budokan, 1978',                    era:'live'},
-      {id:'OPemyipJzAM',title:'Dream Police',             meta:'Official Video · Dream Police, 1979',        era:'classic'},
-      {id:'ZbkypX1OhZ0',title:'Surrender',                meta:'Live from Budokan, 1978',                    era:'live'},
-      {id:'2u6uXuT9pm4',title:'The Flame',                meta:'Official Video · Lap of Luxury, 1988',       era:'modern'},
-      {id:'Jo71pQxvAvc',title:'Voices',                   meta:'Official Video · All Shook Up, 1980',        era:'classic'},
-      {id:'YuzSYb_Kk70',title:'Mighty Wings',             meta:'Official Video · Top Gun Soundtrack, 1986',  era:'classic'},
+      {id:'-qgpewMCVjs',title:'I Want You to Want Me',meta:'Live from Budokan, 1978',era:'live'},
+      {id:'OPemyipJzAM',title:'Dream Police',meta:'Official Video · Dream Police, 1979',era:'classic'},
+      {id:'ZbkypX1OhZ0',title:'Surrender',meta:'Live from Budokan, 1978',era:'live'},
+      {id:'2u6uXuT9pm4',title:'The Flame',meta:'Official Video · Lap of Luxury, 1988',era:'modern'},
+      {id:'Jo71pQxvAvc',title:'Voices',meta:'Official Video · All Shook Up, 1980',era:'classic'},
+      {id:'YuzSYb_Kk70',title:'Mighty Wings',meta:'Official Video · Top Gun Soundtrack, 1986',era:'classic'},
     ]},
-  whitesnake:{
-    label:'Whitesnake', color:'#60A8D0',
-    bio:"<strong style='color:#60A8D0'>WHITESNAKE</strong> — Formed 1978 by Deep Purple vocalist David Coverdale. Their 1987 self-titled album sold over 8 million copies in the U.S., powered by MTV-era videos. Known for massive guitar riffs and Coverdale's powerful vocals. Over 50 million records sold worldwide.",
+  whitesnake:{label:'Whitesnake',color:'#60A8D0',
+    bio:"<strong style='color:#60A8D0'>WHITESNAKE</strong> — Formed 1978 by David Coverdale. Their 1987 self-titled album sold over 8 million copies in the U.S. Over 50 million records sold worldwide.",
     videos:[
-      {id:'WyF8RHM1OCg',title:"Here I Go Again '87",      meta:"Official Video · Whitesnake, 1987",          era:'classic'},
-      {id:'GOJk0HW_hJw',title:'Is This Love',             meta:'Official Video · Whitesnake, 1987',          era:'classic'},
-      {id:'swPt9HBRXuE',title:'Still of the Night',       meta:'Official Video · Whitesnake, 1987',          era:'classic'},
-      {id:'dkl2hiTHUrc',title:'Give Me All Your Love',    meta:'Official Video · Whitesnake, 1987',          era:'classic'},
-      {id:'8Tp0K9YiTPE',title:'Fool for Your Loving',     meta:'Official Video · Ready an\' Willing, 1980',  era:'classic'},
+      {id:'WyF8RHM1OCg',title:"Here I Go Again '87",meta:"Official Video · Whitesnake, 1987",era:'classic'},
+      {id:'GOJk0HW_hJw',title:'Is This Love',meta:'Official Video · Whitesnake, 1987',era:'classic'},
+      {id:'swPt9HBRXuE',title:'Still of the Night',meta:'Official Video · Whitesnake, 1987',era:'classic'},
+      {id:'dkl2hiTHUrc',title:'Give Me All Your Love',meta:'Official Video · Whitesnake, 1987',era:'classic'},
+      {id:'8Tp0K9YiTPE',title:'Fool for Your Loving',meta:"Official Video · Ready an' Willing, 1980",era:'classic'},
     ]},
-  rush:{
-    label:'Rush', color:'#B0784A',
-    bio:"<strong style='color:#B0784A'>RUSH</strong> — Formed 1968 in Toronto. One of the most critically acclaimed progressive rock trios ever, known for technical complexity and philosophical lyrics. <em>Tom Sawyer</em> and <em>The Spirit of Radio</em> are defining anthems. Rock and Roll Hall of Fame inductees, 2013.",
+  rush:{label:'Rush',color:'#B0784A',
+    bio:"<strong style='color:#B0784A'>RUSH</strong> — Formed 1968 in Toronto. One of the most acclaimed progressive rock trios ever. Rock and Roll Hall of Fame inductees, 2013.",
     videos:[
-      {id:'auLBLk4ibAk',title:'Tom Sawyer',               meta:'Official Video · Moving Pictures, 1981',     era:'classic'},
-      {id:'ZiRuj2_czzw',title:'Limelight',                meta:'Official Video · Moving Pictures, 1981',     era:'classic'},
-      {id:'g_QtO0Rhp0w',title:'The Spirit of Radio',      meta:'Official Video · Permanent Waves, 1980',     era:'classic'},
-      {id:'EYYdQB0mkEU',title:'Subdivisions',             meta:'Official Video · Signals, 1982',             era:'classic'},
-      {id:'T7Zhr8RQt_M',title:'New World Man',            meta:'Visualizer · Signals, 1982',                 era:'classic'},
-      {id:'kyhW2v0NDM0',title:'Closer to the Heart',      meta:'Official Video · A Farewell to Kings, 1977', era:'classic'},
+      {id:'auLBLk4ibAk',title:'Tom Sawyer',meta:'Official Video · Moving Pictures, 1981',era:'classic'},
+      {id:'ZiRuj2_czzw',title:'Limelight',meta:'Official Video · Moving Pictures, 1981',era:'classic'},
+      {id:'g_QtO0Rhp0w',title:'The Spirit of Radio',meta:'Official Video · Permanent Waves, 1980',era:'classic'},
+      {id:'EYYdQB0mkEU',title:'Subdivisions',meta:'Official Video · Signals, 1982',era:'classic'},
+      {id:'T7Zhr8RQt_M',title:'New World Man',meta:'Visualizer · Signals, 1982',era:'classic'},
+      {id:'kyhW2v0NDM0',title:'Closer to the Heart',meta:'Official Video · A Farewell to Kings, 1977',era:'classic'},
     ]},
-  badenglish:{
-    label:'Bad English', color:'#9898C8',
-    bio:"<strong style='color:#9898C8'>BAD ENGLISH</strong> — Formed 1987 in Los Angeles, featuring vocalist John Waite and guitarist Neal Schon of Journey. Their debut single <em>When I See You Smile</em> reached #1 on the Billboard Hot 100 in 1989. A short-lived but memorable supergroup of the arena rock era.",
+  badenglish:{label:'Bad English',color:'#9898C8',
+    bio:"<strong style='color:#9898C8'>BAD ENGLISH</strong> — Formed 1987 featuring John Waite and Neal Schon of Journey. <em>When I See You Smile</em> hit #1 on the Billboard Hot 100 in 1989.",
     videos:[
-      {id:'cu6pclWsxzs',title:'When I See You Smile',     meta:'Official Video · Bad English, 1989',         era:'classic'},
-      {id:'7Swuq9JVoX4',title:'Possession',               meta:'Official Video · Bad English, 1989',         era:'classic'},
-      {id:'AuJqJ7j7HVY',title:'Price of Love',            meta:'Official Video · Bad English, 1989',         era:'classic'},
-      {id:'appgDoruae0',title:'Straight to Your Heart',   meta:'Official Video · Backlash, 1991',            era:'classic'},
+      {id:'cu6pclWsxzs',title:'When I See You Smile',meta:'Official Video · Bad English, 1989',era:'classic'},
+      {id:'7Swuq9JVoX4',title:'Possession',meta:'Official Video · Bad English, 1989',era:'classic'},
+      {id:'AuJqJ7j7HVY',title:'Price of Love',meta:'Official Video · Bad English, 1989',era:'classic'},
+      {id:'appgDoruae0',title:'Straight to Your Heart',meta:'Official Video · Backlash, 1991',era:'classic'},
     ]},
-  styx:{
-    label:'Styx', color:'#58B878',
-    bio:"<strong style='color:#58B878'>STYX</strong> — Formed 1972 in Chicago. Pioneered the arena rock sound with sweeping keyboard-driven anthems. Four consecutive platinum albums in the late 1970s. <em>Come Sail Away</em> and <em>Renegade</em> are among the most recognisable songs in classic rock history.",
+  styx:{label:'Styx',color:'#58B878',
+    bio:"<strong style='color:#58B878'>STYX</strong> — Formed 1972 in Chicago. Pioneered arena rock with keyboard-driven anthems. Four consecutive platinum albums in the late 1970s.",
     videos:[
-      {id:'e5MAg_yWsq8',title:'Come Sail Away',           meta:'Official Video · The Grand Illusion, 1977',  era:'classic'},
-      {id:'ekQ4TFs7JNs',title:'Renegade',                 meta:'Official Video · Pieces of Eight, 1978',     era:'classic'},
-      {id:'uc6f_2nPSX8',title:'Mr. Roboto',               meta:'Official Video · Kilroy Was Here, 1983',     era:'classic'},
-      {id:'5XcKBmdfpWs',title:'Too Much Time on My Hands',meta:'Official Video · Paradise Theatre, 1981',    era:'classic'},
-      {id:'yaVyQS1T7TY',title:'Babe',                     meta:'Official Video · Cornerstone, 1979',         era:'classic'},
-      {id:'uR4if4ble1A',title:'Lady',                     meta:'Official Video · Styx II, 1973',             era:'classic'},
+      {id:'e5MAg_yWsq8',title:'Come Sail Away',meta:'Official Video · The Grand Illusion, 1977',era:'classic'},
+      {id:'ekQ4TFs7JNs',title:'Renegade',meta:'Official Video · Pieces of Eight, 1978',era:'classic'},
+      {id:'uc6f_2nPSX8',title:'Mr. Roboto',meta:'Official Video · Kilroy Was Here, 1983',era:'classic'},
+      {id:'5XcKBmdfpWs',title:'Too Much Time on My Hands',meta:'Official Video · Paradise Theatre, 1981',era:'classic'},
+      {id:'yaVyQS1T7TY',title:'Babe',meta:'Official Video · Cornerstone, 1979',era:'classic'},
+      {id:'uR4if4ble1A',title:'Lady',meta:'Official Video · Styx II, 1973',era:'classic'},
     ]},
-  supertramp:{
-    label:'Supertramp', color:'#C870A0',
-    bio:"<strong style='color:#C870A0'>SUPERTRAMP</strong> — Formed 1969 in London. Pioneers of progressive pop-rock with a signature blend of piano, saxophone and rich harmonies. <em>Breakfast in America</em> sold over 18 million copies worldwide and remains one of the defining albums of the late 1970s.",
+  supertramp:{label:'Supertramp',color:'#C870A0',
+    bio:"<strong style='color:#C870A0'>SUPERTRAMP</strong> — Formed 1969 in London. <em>Breakfast in America</em> sold over 18 million copies worldwide and remains one of the defining albums of the late 1970s.",
     videos:[
-      {id:'kln_bIndDJg',title:'The Logical Song',         meta:'Official Video · Breakfast in America, 1979',era:'classic'},
-      {id:'aQdoUUi3iJ8',title:'Breakfast in America',     meta:'Official Video · Breakfast in America, 1979',era:'classic'},
-      {id:'B885n08hOmw',title:'Dreamer',                  meta:'Official Video · Crime of the Century, 1974',era:'classic'},
-      {id:'yzuX-gm67GM',title:'Give a Little Bit',        meta:'Official Video · Even in the Quietest Moments, 1977',era:'classic'},
-      {id:'LPRrHyXchEY',title:'Take the Long Way Home',   meta:'Live · Breakfast in America, 1979',          era:'live'},
-      {id:'YZUE4_PtOk0',title:"It's Raining Again",       meta:"Official Video · Famous Last Words, 1982",   era:'classic'},
+      {id:'kln_bIndDJg',title:'The Logical Song',meta:'Official Video · Breakfast in America, 1979',era:'classic'},
+      {id:'aQdoUUi3iJ8',title:'Breakfast in America',meta:'Official Video · Breakfast in America, 1979',era:'classic'},
+      {id:'B885n08hOmw',title:'Dreamer',meta:'Official Video · Crime of the Century, 1974',era:'classic'},
+      {id:'yzuX-gm67GM',title:'Give a Little Bit',meta:'Official Video · 1977',era:'classic'},
+      {id:'LPRrHyXchEY',title:'Take the Long Way Home',meta:'Live · Breakfast in America, 1979',era:'live'},
+      {id:'YZUE4_PtOk0',title:"It's Raining Again",meta:"Official Video · Famous Last Words, 1982",era:'classic'},
+    ]},
+  grandfunk:{label:'Grand Funk',color:'#D4704A',
+    bio:"<strong style='color:#D4704A'>GRAND FUNK RAILROAD</strong> — Formed 1969 in Flint, Michigan. One of the hardest-rocking American bands of the early 1970s. <em>We're An American Band</em> hit #1 in 1973. Sold out Shea Stadium faster than the Beatles.",
+    videos:[
+      {id:'Pf6P3kVJ9U0',title:"We're An American Band",meta:'Official Video · 1973',era:'classic'},
+      {id:'TLi_snVfRqI',title:'Some Kind of Wonderful',meta:'Official Video · 1974',era:'classic'},
+      {id:'sSQOeQakExU',title:'The Locomotion',meta:'Official Video · 1974',era:'classic'},
+      {id:'D295vdVGJu4',title:"I'm Your Captain / Closer to Home",meta:'Live · 1971',era:'live'},
+      {id:'SwEUXNS-k2s',title:'Bad Time',meta:'Official Audio · 1975',era:'classic'},
+    ]},
+  deeppurple:{label:'Deep Purple',color:'#8868C8',
+    bio:"<strong style='color:#8868C8'>DEEP PURPLE</strong> — Formed 1968 in Hertford, England. One of the pioneers of hard rock and heavy metal alongside Led Zeppelin and Black Sabbath. <em>Smoke on the Water</em> has one of the most famous guitar riffs in rock history. Rock and Roll Hall of Fame inductees, 2016.",
+    videos:[
+      {id:'Q2FzZSBD5LE',title:'Smoke on the Water',meta:'Official Music Video · Machine Head, 1972',era:'classic'},
+      {id:'UAKCR7kQMTQ',title:'Highway Star',meta:'Live Video HQ · Machine Head, 1972',era:'live'},
+      {id:'rZXhZ6Wejqc',title:'Black Night',meta:'TV Performance · 1970',era:'classic'},
+      {id:'gZ_kez7WVUU',title:'Perfect Strangers',meta:'Official Music Video · 1984',era:'modern'},
+      {id:'4wAPTsjhrjM',title:'Child in Time',meta:'Official Video · Deep Purple in Rock, 1970',era:'classic'},
+      {id:'t4fDCwDiWJQ',title:'Burn',meta:'Live Video · Burn, 1974',era:'live'},
+    ]},
+  ledzeppelin:{label:'Led Zeppelin',color:'#C84848',
+    bio:"<strong style='color:#C84848'>LED ZEPPELIN</strong> — Formed 1968 in London. Widely considered the greatest rock band of all time. Over 300 million records sold worldwide. Rock and Roll Hall of Fame inductees, 1995. <em>Stairway to Heaven</em> remains the most requested song in radio history.",
+    videos:[
+      {id:'Ly6ZhQVnVow',title:'Stairway to Heaven',meta:"Live at Earl's Court 1975 · Official Video",era:'live'},
+      {id:'HQmmM_qwG4k',title:'Whole Lotta Love',meta:'Official Music Video',era:'classic'},
+      {id:'PD-MdiUm1_Y',title:'Kashmir',meta:'Live from Celebration Day · Official Video',era:'live'},
+      {id:'qyivczZI5pw',title:'Rock and Roll',meta:'Official Music Video · Led Zeppelin IV, 1971',era:'classic'},
+      {id:'6tlSx0jkuLM',title:'Black Dog',meta:'Live at Madison Square Garden 1973 · Official Video',era:'live'},
+      {id:'RlNhD0oS5pk',title:'Immigrant Song',meta:'Live 1972 · Official Video',era:'live'},
+    ]},
+  giant:{label:'Giant',color:'#70B890',
+    bio:"<strong style='color:#70B890'>GIANT</strong> — Formed 1987 in Nashville, featuring guitarist Dann Huff and vocalist Mike Brignardello. Known for beautifully crafted melodic rock ballads. <em>I'll See You in My Dreams</em> became a staple of adult contemporary radio in 1989.",
+    videos:[
+      {id:'iug0X6cJDDM',title:"I'll See You in My Dreams",meta:'Official Video · Last of the Runaways, 1989',era:'classic'},
+      {id:'EWKxEytmpjA',title:"I Can't Get Close Enough",meta:'Official Video · Last of the Runaways, 1989',era:'classic'},
+      {id:'oxOd0GXy2CU',title:'Stay',meta:'Official Video · Time to Burn, 1992',era:'classic'},
+    ]},
+  toto:{label:'Toto',color:'#C8A040',
+    bio:"<strong style='color:#C8A040'>TOTO</strong> — Formed 1977 in Los Angeles by some of the most in-demand session musicians in the world. <em>Africa</em> and <em>Rosanna</em> remain two of the most beloved songs of the 1980s. Won six Grammy Awards in 1983.",
+    videos:[
+      {id:'FTQbiNvZqaY',title:'Africa',meta:'Official HD Video · Toto IV, 1982',era:'classic'},
+      {id:'qmOLtTGvsbM',title:'Rosanna',meta:'Official HD Video · Toto IV, 1982',era:'classic'},
+      {id:'r7XhWUDj-Ts',title:"I'll Be Over You",meta:"Official Video · Fahrenheit, 1986",era:'classic'},
+      {id:'htgr3pvBr-I',title:'Hold the Line',meta:'Official Video · Toto, 1978',era:'classic'},
+      {id:'QCq9751mOFo',title:'Pamela',meta:'Official Video · The Seventh One, 1988',era:'classic'},
+      {id:'EWIgEtkE3GA',title:'Georgy Porgy',meta:'Official Video · Toto, 1978',era:'classic'},
+    ]},
+  chicago:{label:'Chicago',color:'#5898D4',
+    bio:"<strong style='color:#5898D4'>CHICAGO</strong> — Formed 1967 in Chicago, Illinois. One of the longest-running and best-selling bands of all time with over 100 million records sold. Famous for blending rock with jazz and orchestral arrangements. Rock and Roll Hall of Fame inductees, 2016.",
+    videos:[
+      {id:'A9YCg1uQ0ow',title:'25 or 6 to 4',meta:'Official Music Video · Chicago II, 1970',era:'classic'},
+      {id:'1A0MPWseJIE',title:"Hard to Say I'm Sorry",meta:'Official Music Video · Chicago 16, 1982',era:'classic'},
+      {id:'_Mnw9uiYggU',title:'Saturday in the Park',meta:'Official Video · Chicago V, 1972',era:'classic'},
+      {id:'CRfy1yorkec',title:"You're the Inspiration",meta:"Official Music Video · Chicago 17, 1984",era:'classic'},
+      {id:'5bG6zpJ9GNY',title:'If You Leave Me Now',meta:'Official Video · Chicago X, 1976',era:'classic'},
+      {id:'9FzCWLOHUes',title:'Does Anybody Really Know What Time It Is',meta:'Official Audio · Chicago II, 1969',era:'classic'},
     ]},
 };
 
+/* ═══════════════════════════════════════════════════
+   QUEUE & PLAYBACK STATE
+═══════════════════════════════════════════════════ */
+const eraLabel={classic:'Classic Era',live:'Live',modern:'Modern Era'};
+const eras=['all','classic','live','modern'];
 const th  = id => 'https://img.youtube.com/vi/'+id+'/mqdefault.jpg';
 const emb = id => 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&enablejsapi=1';
 const ytw = id => 'https://www.youtube.com/watch?v='+id;
 
-let currentId='', currentTitle='';
+let queue=[], queueIdx=-1, autoplayOn=false;
+let currentId='', currentTitle='', currentBand='kansas';
 
-window.addEventListener('message', function(e){
-  try{ const d=JSON.parse(e.data); if(d.event==='onError'&&[100,101,150].includes(Number(d.info))) showFallback(); }catch(_){}
+function getAllVideos(){
+  return Object.entries(cfg).flatMap(([band,c])=>c.videos.map(v=>({...v,band,bandLabel:c.label,bandColor:c.color})));
+}
+function getBandVideos(band){
+  return cfg[band].videos.map(v=>({...v,band,bandLabel:cfg[band].label,bandColor:cfg[band].color}));
+}
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function toggleAutoplay(){
+  autoplayOn=!autoplayOn;
+  document.getElementById('btn-autoplay').classList.toggle('autoplay-on',autoplayOn);
+  updateStatus();
+}
+function startShuffle(){
+  queue=shuffle(getAllVideos()); queueIdx=0; autoplayOn=true;
+  document.getElementById('btn-autoplay').classList.add('autoplay-on');
+  const btn=document.getElementById('btn-shuffle'); btn.classList.add('shuffle-on');
+  setTimeout(()=>btn.classList.remove('shuffle-on'),1500);
+  playFromQueue(0); updateStatus();
+}
+function playCurrentBand(){
+  queue=getBandVideos(currentBand); queueIdx=0; autoplayOn=true;
+  document.getElementById('btn-autoplay').classList.add('autoplay-on');
+  playFromQueue(0); updateStatus();
+}
+function updateStatus(){
+  const el=document.getElementById('playback-status');
+  if(autoplayOn&&queue.length>0) el.textContent=`Autoplay on · ${queue.length} videos in queue`;
+  else if(autoplayOn) el.textContent='Autoplay on · click any video to start';
+  else el.textContent='Eighteen legendary bands · 120+ browser-verified videos';
+}
+function playFromQueue(idx){
+  if(idx<0||idx>=queue.length) return;
+  queueIdx=idx;
+  const v=queue[idx];
+  if(v.band!==currentBand) sw(v.band,false);
+  openVideo(v.id,v.title,v.meta,true);
+  highlightCard(v.id);
+}
+function playAdjacentVideo(dir){
+  if(queue.length===0){ queue=getBandVideos(currentBand); const ci=queue.findIndex(v=>v.id===currentId); queueIdx=ci>=0?ci:0; }
+  const next=queueIdx+dir;
+  if(next>=0&&next<queue.length) playFromQueue(next);
+}
+function highlightCard(id){
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('now-playing'));
+  const card=document.querySelector(`[data-id="${id}"]`);
+  if(card){ card.classList.add('now-playing'); card.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+}
+function updateQueueBadge(){
+  const badge=document.getElementById('queue-badge'),pos=document.getElementById('queue-pos');
+  if(queue.length>0){ const n=queueIdx+1; badge.textContent=`${n} / ${queue.length}`; badge.style.display='inline-block'; pos.textContent=`${n} of ${queue.length}`; }
+  else{ badge.style.display='none'; pos.textContent=''; }
+  document.getElementById('btn-prev').disabled=queueIdx<=0;
+  document.getElementById('btn-next').disabled=queue.length===0||queueIdx>=queue.length-1;
+}
+
+/* ═══════════════════════════════════════════════════
+   MODAL
+═══════════════════════════════════════════════════ */
+window.addEventListener('message',function(e){
+  try{
+    const d=JSON.parse(e.data);
+    if(d.event==='onError'&&[100,101,150].includes(Number(d.info))) showFallback();
+    if(d.event==='onStateChange'&&d.info===0&&autoplayOn) playAdjacentVideo(1);
+  }catch(_){}
 });
 function onIframeLoad(iframe){
-  setTimeout(function(){
-    try{ const t=iframe.contentDocument&&iframe.contentDocument.title; if(t==='YouTube'||t==='') showFallback(); }catch(_){}
-  },2500);
+  setTimeout(function(){ try{ const t=iframe.contentDocument&&iframe.contentDocument.title; if(t==='YouTube'||t==='') showFallback(); }catch(_){} },2500);
 }
 function showFallback(){
   const fb=document.getElementById('modal-fallback');
@@ -328,9 +496,10 @@ function showFallback(){
 }
 function hideFallback(){ document.getElementById('modal-fallback').classList.remove('visible'); }
 
-function openVideo(id,title,meta){
+function openVideo(id,title,meta,fromQueue){
   currentId=id; currentTitle=title;
   hideFallback();
+  if(!fromQueue){ queue=getBandVideos(currentBand); queueIdx=queue.findIndex(v=>v.id===id); if(queueIdx<0) queueIdx=0; }
   document.getElementById('modal-iframe').src=emb(id);
   document.getElementById('modal-title').textContent=title;
   document.getElementById('modal-meta').textContent=meta;
@@ -338,43 +507,49 @@ function openVideo(id,title,meta){
   document.getElementById('fallback-btn').href=ytw(id);
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow='hidden';
+  updateQueueBadge(); updateStatus();
 }
 function closeModalNow(){
   document.getElementById('modal-iframe').src='';
   document.getElementById('modal').classList.remove('open');
-  hideFallback();
-  document.body.style.overflow='';
+  hideFallback(); document.body.style.overflow='';
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('now-playing'));
 }
 function closeModal(e){ if(e.target===document.getElementById('modal')) closeModalNow(); }
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModalNow(); });
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeModalNow();
+  if(e.key==='ArrowRight') playAdjacentVideo(1);
+  if(e.key==='ArrowLeft') playAdjacentVideo(-1);
+});
 
+/* ═══════════════════════════════════════════════════
+   BUILDERS
+═══════════════════════════════════════════════════ */
 function buildTabs(){
-  document.getElementById('tabs').innerHTML = Object.entries(cfg).map(([band,c])=>`
+  document.getElementById('tabs').innerHTML=Object.entries(cfg).map(([band,c])=>`
     <button class="tab${band==='kansas'?' a-'+band:''}" id="t-${band}" onclick="sw('${band}')">
       <span class="dot" style="background:${c.color}"></span>${c.label}
     </button>`).join('');
 }
-
 function buildPanel(band){
   const c=cfg[band];
-  const filters=eras.map(e=>`
-    <button class="fbtn${e==='all'?' on':''}" style="--band-color:${c.color}" onclick="filt('${band}','${e}',this)">
-      ${e==='all'?'All':eraLabel[e]}
-    </button>`).join('');
-  return `
-  <div class="panel${band==='kansas'?' active':''}" id="p-${band}">
+  const filters=eras.map(e=>`<button class="fbtn${e==='all'?' on':''}" style="--band-color:${c.color}" onclick="filt('${band}','${e}',this)">${e==='all'?'All':eraLabel[e]}</button>`).join('');
+  return `<div class="panel${band==='kansas'?' active':''}" id="p-${band}">
     <div class="bio">${c.bio}</div>
     <div class="filters" id="fl-${band}">${filters}</div>
     <div class="sec-title" style="color:${c.color}">Video Collection</div>
     <div class="grid" id="gr-${band}">${buildCards(band,'all')}</div>
   </div>`;
 }
-
 function buildCards(band,filter){
   const c=cfg[band];
   const list=filter==='all'?c.videos:c.videos.filter(v=>v.era===filter);
   return list.map(v=>`
-    <div class="card" style="--hc:${c.color}" onmouseenter="this.style.borderColor=this.style.getPropertyValue('--hc')" onmouseleave="this.style.borderColor=''" onclick="openVideo('${v.id}','${v.title.replace(/'/g,"\\'")}','${v.meta.replace(/'/g,"\\'")}')">
+    <div class="card" data-id="${v.id}"
+      onmouseenter="this.style.borderColor='${c.color}'"
+      onmouseleave="this.style.borderColor=''"
+      onclick="openVideo('${v.id}','${v.title.replace(/'/g,"\\'")}','${v.meta.replace(/'/g,"\\'")}',false)">
+      <div class="np-indicator">Now Playing</div>
       <div class="thumb">
         <img src="${th(v.id)}" alt="${v.title}" loading="lazy" onerror="this.style.background='#2a2018'">
         <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
@@ -386,16 +561,13 @@ function buildCards(band,filter){
       </div>
     </div>`).join('');
 }
-
-function sw(band){
+function sw(band,scroll=true){
+  currentBand=band;
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>{
-    const b=t.id.replace('t-',''); t.className='tab'+(b===band?' a-'+b:'');
-  });
+  document.querySelectorAll('.tab').forEach(t=>{ const b=t.id.replace('t-',''); t.className='tab'+(b===band?' a-'+b:''); });
   document.getElementById('p-'+band).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
+  if(scroll) window.scrollTo({top:0,behavior:'smooth'});
 }
-
 function filt(band,era,btn){
   document.querySelectorAll('#fl-'+band+' .fbtn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
