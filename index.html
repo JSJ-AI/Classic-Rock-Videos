@@ -116,9 +116,12 @@
   .nav-btn svg{width:11px;height:11px;fill:currentColor;}
   .queue-badge{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;padding:3px 9px;border-radius:10px;background:rgba(125,184,122,0.12);border:1px solid rgba(125,184,122,0.3);color:var(--green);white-space:nowrap;}
   .np-lbl{font-family:'Cinzel',serif;font-size:11px;color:var(--muted);}
-  .footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--muted);font-style:italic;line-height:2;}
+  .bmc-wrap{text-align:center;margin:18px 0 4px;}
+  .bmc-btn{display:inline-flex;align-items:center;gap:10px;font-family:'Cinzel',serif;font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:13px 28px;border-radius:30px;background:#FFDD00;color:#000;text-decoration:none;transition:all .2s;box-shadow:0 4px 20px rgba(255,221,0,0.35);border:none;cursor:pointer;}
+  .bmc-btn:hover{background:#FFE033;transform:translateY(-2px);box-shadow:0 6px 28px rgba(255,221,0,0.5);}
+  .bmc-btn span{font-size:20px;}
 
-  @media(max-width:680px){
+  .footer{margin-top:44px;padding-top:22px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--muted);font-style:italic;line-height:2;}
     .grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:11px;}
     .filter-row{gap:6px;}
     .fchip{font-size:10px;padding:6px 12px;}
@@ -215,6 +218,12 @@
     <span class="results-label" id="results-label">All decades · All genres</span>
   </div>
   <div class="grid" id="main-grid"></div>
+
+  <div class="bmc-wrap">
+    <a class="bmc-btn" href="https://buymeacoffee.com/j2ai" target="_blank" rel="noopener">
+      <span>☕</span> Buy Me a Coffee
+    </a>
+  </div>
 
   <div class="footer">
     All video IDs browser-verified · Autoplay · Shuffle · Play Current View · ← → to skip<br>
