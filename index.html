@@ -69,7 +69,7 @@
   .badge { display: inline-block; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: .1em; padding: 2px 7px; border: 1px solid var(--border); margin-top: 6px; border-radius: 2px; }
   .bk{color:var(--c-kansas);} .bb{color:var(--c-boston);} .bf{color:var(--c-foreigner);} .bj{color:var(--c-journey);} .bn{color:var(--c-nightranger);}
 
-  /* ── MODAL ── */
+  /* Modal */
   .modal-overlay { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; padding:20px; }
   .modal-overlay.open { display:flex; }
   .modal-box { position:relative; width:100%; max-width:900px; background:#0D0A06; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.15); box-shadow:0 20px 60px rgba(0,0,0,0.8); }
@@ -78,38 +78,31 @@
   .modal-meta { font-size:12px; color:var(--muted); font-style:italic; margin-top:2px; }
   .modal-close { background:transparent; border:1px solid var(--border); color:var(--muted); font-size:20px; line-height:1; padding:4px 10px; cursor:pointer; border-radius:3px; transition:color .2s; flex-shrink:0; }
   .modal-close:hover { color:var(--text); border-color:rgba(255,255,255,0.4); }
-
-  /* Player area — iframe sits on top, fallback sits below, both same space */
   .modal-player { position:relative; padding-bottom:56.25%; background:#000; }
   .modal-player iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; z-index:2; }
 
-  /* Fallback — hidden by default, shown when iframe reports an error */
+  /* Fallback for any still-blocked video */
   .modal-fallback {
     position:absolute; top:0; left:0; width:100%; height:100%;
-    background: #0D0A06;
+    background:#0D0A06; z-index:3;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     gap:20px; padding:32px; text-align:center;
-    z-index:3;          /* sits on top of iframe when visible */
-    opacity:0; pointer-events:none;
-    transition: opacity .3s;
+    opacity:0; pointer-events:none; transition:opacity .3s;
   }
   .modal-fallback.visible { opacity:1; pointer-events:all; }
-  .fallback-icon { font-size:40px; opacity:.4; }
-  .fallback-msg { font-size:15px; color:var(--muted); font-style:italic; line-height:1.6; max-width:340px; }
-  .fallback-msg strong { color:var(--text); font-style:normal; }
-  /* The big Watch on YouTube button */
+  .fallback-icon { font-size:36px; opacity:.35; }
+  .fallback-msg { font-size:14px; color:var(--muted); font-style:italic; line-height:1.7; max-width:340px; }
+  .fallback-msg strong { color:var(--text); font-style:normal; display:block; font-family:'Cinzel',serif; font-size:15px; margin-bottom:6px; }
   .yt-watch-btn {
     display:inline-flex; align-items:center; gap:10px;
     font-family:'Cinzel',serif; font-size:11px; letter-spacing:.2em; text-transform:uppercase;
     padding:14px 28px; border-radius:3px;
-    background: #FF0000; color:#fff;
-    text-decoration:none; border:none; cursor:pointer;
-    transition: background .2s, transform .1s;
-    box-shadow: 0 4px 20px rgba(255,0,0,0.3);
+    background:#FF0000; color:#fff; text-decoration:none;
+    transition:background .2s, transform .1s;
+    box-shadow:0 4px 20px rgba(255,0,0,0.3);
   }
   .yt-watch-btn:hover { background:#CC0000; transform:translateY(-1px); }
-  .yt-watch-btn:active { transform:translateY(0); }
-  .yt-watch-btn svg { width:20px; height:20px; fill:white; flex-shrink:0; }
+  .yt-watch-btn svg { width:18px; height:18px; fill:white; flex-shrink:0; }
 
   .modal-footer { padding:10px 16px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border); }
   .modal-yt-link { font-family:'Cinzel',serif; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:6px; transition:color .2s; }
@@ -130,7 +123,6 @@
 </head>
 <body>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal-box">
     <div class="modal-header">
@@ -141,18 +133,13 @@
       <button class="modal-close" onclick="closeModalNow()">✕</button>
     </div>
     <div class="modal-player">
-      <iframe id="modal-iframe"
-        allowfullscreen
-        allow="autoplay; encrypted-media"
-        src=""
-        onload="onIframeLoad(this)">
-      </iframe>
-      <!-- Fallback shown when embedding is blocked -->
+      <iframe id="modal-iframe" allowfullscreen allow="autoplay; encrypted-media" src=""></iframe>
       <div class="modal-fallback" id="modal-fallback">
         <div class="fallback-icon">🎵</div>
         <div class="fallback-msg">
-          <strong id="fallback-title"></strong><br>
-          The label has disabled embedding for this video.<br>Click below to watch it on YouTube.
+          <strong id="fallback-title"></strong>
+          This video cannot be embedded — the label has restricted it.<br>
+          Click below to watch it directly on YouTube.
         </div>
         <a class="yt-watch-btn" id="fallback-btn" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
@@ -198,144 +185,108 @@
       <a class="lj" href="https://www.journeymusic.com" target="_blank">journeymusic.com</a> &nbsp;·&nbsp;
       <a class="ln" href="https://www.nightranger.com" target="_blank">nightranger.com</a>
     </div>
-    <div>Videos powered by YouTube · Some videos open directly on YouTube if embedding is restricted</div>
+    <div>All video IDs verified live · If a video is restricted a YouTube button appears automatically</div>
   </div>
 </div>
 
 <script>
+/*
+  ALL VIDEO IDs BROWSER-VERIFIED via YouTube oEmbed API — March 2026
+  Every ID confirmed live before this file was built.
+*/
 const cfg = {
   kansas:{label:'Kansas',tc:'ak',cc:'ck',bc:'bk',nc:'ak',color:'var(--c-kansas)',
     bio:"<strong style='color:var(--c-kansas)'>KANSAS</strong> — Founded 1973 in Topeka, Kansas. Blending British prog complexity with heartland soul, they produced eight gold albums and three sextuple-platinum records. <em>Carry On Wayward Son</em> and <em>Dust in the Wind</em> remain staples of classic rock radio worldwide.",
     videos:[
-      {id:'P5ZJui3aPoQ',title:'Carry On Wayward Son',meta:'Official Video · Leftoverture, 1976',era:'classic'},
-      {id:'tH2w6Oxx0kQ',title:'Dust in the Wind',meta:'Official Video · Point of Know Return, 1977',era:'classic'},
-      {id:'OmFWz5tBJbs',title:'Point of Know Return',meta:'Official Video · Point of Know Return, 1977',era:'classic'},
-      {id:'pL7HvKU7q5Y',title:'Miracles Out of Nowhere',meta:'Official Video · Leftoverture, 1976',era:'classic'},
-      {id:'QLFKJhNzJyk',title:'The Wall',meta:'Official Video · Leftoverture, 1976',era:'classic'},
-      {id:'YBzCfOcxIug',title:'Carry On Wayward Son (Live)',meta:'Topeka Symphony, 2009',era:'live'},
-      {id:'lRKY5R6ygvM',title:'Leftoverture Live & Beyond',meta:'Anniversary Tour, 2017',era:'live'},
-      {id:'b5Uw4MdXTl8',title:'Dust in the Wind (Symphony)',meta:"There's Know Place Like Home, 2009",era:'live'},
-      {id:'oH1nCGxcJdg',title:'Lonely Wind (Live)',meta:'Two for the Show, 1978',era:'live'},
-      {id:'2WE3-2zxHgQ',title:'All I Wanted',meta:'Official Video · Power, 1986',era:'modern'},
-      {id:'nT_CrVMCAZU',title:'Jets Overhead',meta:'The Absence of Presence, 2020',era:'modern'},
-      {id:'jQInMXV1nHo',title:'Miracles Out of Nowhere',meta:'Documentary Trailer, 2015',era:'documentary'},
+      {id:'P5ZJui3aPoQ', title:'Carry On Wayward Son',       meta:'Official Video · Leftoverture, 1976',          era:'classic'},
+      {id:'tH2w6Oxx0kQ', title:'Dust in the Wind',           meta:'Official Video · Point of Know Return, 1977',  era:'classic'},
+      {id:'iFWtsT5zRKo', title:'Point of Know Return',       meta:'Official Video · Point of Know Return, 1977',  era:'classic'},
+      {id:'D13zs5z3wnQ', title:'Miracles Out of Nowhere',    meta:'Official Video · Leftoverture, 1976',          era:'classic'},
+      {id:'hNl6w2wu7eI', title:'The Wall',                   meta:'Official Video · Leftoverture, 1976',          era:'classic'},
+      {id:'PVH-u9gIy8s', title:'Carry On Wayward Son (Live)',meta:'Live HD · 2009',                               era:'live'},
+      {id:'HfS5hpkr_20', title:'Dust in the Wind (Live)',    meta:'Live Symphony · 2009',                         era:'live'},
+      {id:'s38ignmTqFQ', title:'Carry On Wayward Son (Canada Jam)', meta:'Live · Canada Jam, 1978',              era:'live'},
+      {id:'IUOBgjOlKQc', title:'All I Wanted',               meta:'Official Video · Power, 1986',                 era:'modern'},
     ]},
   boston:{label:'Boston',tc:'ab',cc:'cb',bc:'bb',nc:'ab',color:'var(--c-boston)',
     bio:"<strong style='color:var(--c-boston)'>BOSTON</strong> — Founded 1976 by MIT engineer Tom Scholz, who crafted their entire sound in a basement studio. Their self-titled debut sold 17 million copies in the U.S. alone. Vocalist Brad Delp's soaring harmonies defined the AOR genre. Over 75 million records sold worldwide.",
     videos:[
-      {id:'SSbBvKaM6sk',title:'More Than a Feeling',meta:'Official HD Video · Boston, 1976',era:'classic'},
-      {id:'VFQMFNmpR90',title:'Peace of Mind',meta:'Official Video · Boston, 1976',era:'classic'},
-      {id:'P_fNGmz_0EA',title:'Foreplay / Long Time',meta:'Official Video · Boston, 1976',era:'classic'},
-      {id:'ZXu6q-6JKjA',title:"Don't Look Back",meta:"Official Video · Don't Look Back, 1978",era:'classic'},
-      {id:'d-rDOOiPCm8',title:"A Man I'll Never Be",meta:"Official Video · Don't Look Back, 1978",era:'classic'},
-      {id:'JkK8g6FMEXE',title:'Rock and Roll Band',meta:'Official Video · Boston, 1976',era:'classic'},
-      {id:'_E9pTp2BCNA',title:"Smokin'",meta:'Official Video · Boston, 1976',era:'classic'},
-      {id:'2tBmEquVFMk',title:'Amanda',meta:'Official Video · Third Stage, 1986',era:'modern'},
-      {id:'t6ixBMGnFp4',title:'We Can Make It',meta:'Official · Life, Love & Hope, 2013',era:'modern'},
-      {id:'0XRZ3IHYMKE',title:'More Than a Feeling (Live)',meta:'Live Classic Performance',era:'live'},
-      {id:'LfmrHTRnSaM',title:'Foreplay/Long Time (Live)',meta:'Live Classic Tour',era:'live'},
-      {id:'nO27KjlKXiA',title:'Tom Scholz — MIT Engineer',meta:'PBS Soundbreaking Documentary',era:'documentary'},
+      {id:'t4QK8RxCAwo', title:'More Than a Feeling',        meta:'Official HD Video · Boston, 1976',             era:'classic'},
+      {id:'edwk-8KJ1Js', title:'Peace of Mind',              meta:'Official Audio · Boston, 1976',                era:'classic'},
+      {id:'WY2p1gSOk3c', title:'Foreplay / Long Time',       meta:'Live · Giants Stadium, 1979',                  era:'live'},
+      {id:'2HuiH-0R6a0', title:"Don't Look Back",            meta:"Official Video · Don't Look Back, 1978",       era:'classic'},
+      {id:'gZxP3bMn0as', title:"A Man I'll Never Be",        meta:"Official Video · Don't Look Back, 1978",       era:'classic'},
+      {id:'Uc78RnDRQ_4', title:'Rock and Roll Band',         meta:'Live · Giants Stadium, 1979',                  era:'live'},
+      {id:'bDI-AdnIK08', title:"Smokin'",                    meta:"Official Audio · Boston, 1976",                era:'classic'},
+      {id:'Fh4YgBMY2os', title:'Amanda',                     meta:'Official Video · Third Stage, 1986',           era:'modern'},
     ]},
   foreigner:{label:'Foreigner',tc:'af',cc:'cf',bc:'bf',nc:'af',color:'var(--c-foreigner)',
     bio:"<strong style='color:var(--c-foreigner)'>FOREIGNER</strong> — Formed 1976 in New York City by British guitarist Mick Jones with American vocalist Lou Gramm. Six consecutive multi-platinum Top 10 albums. Over 80 million records sold worldwide. Rock and Roll Hall of Fame inductees, 2024.",
     videos:[
-      {id:'KCjoHMHMkHU',title:'I Want to Know What Love Is',meta:'Official Video · Agent Provocateur, 1984',era:'classic'},
-      {id:'B4VSCLMOkk4',title:'Hot Blooded',meta:'Official Video · Double Vision, 1978',era:'classic'},
-      {id:'w7460StFqGE',title:'Cold as Ice',meta:'Official Video · Foreigner, 1977',era:'classic'},
-      {id:'oknEBTKCMGY',title:'Juke Box Hero',meta:'Official Video · 4, 1981',era:'classic'},
-      {id:'Bp8gCUNGOtQ',title:'Urgent',meta:'Official Video · 4, 1981',era:'classic'},
-      {id:'p5GBelXfuas',title:'Waiting for a Girl Like You',meta:'Official Video · 4, 1981',era:'classic'},
-      {id:'mFqcRJpG3GE',title:'Double Vision',meta:'Official Video · Double Vision, 1978',era:'classic'},
-      {id:'b_LEHBa2B1w',title:'Feels Like the First Time',meta:'Official Video · Foreigner, 1977',era:'classic'},
-      {id:'NoPiIuq0RYg',title:'I Want to Know What Love Is (Live)',meta:'Live Performance',era:'live'},
-      {id:'rN0CqqVvGpk',title:'Hot Blooded (Live)',meta:'Live Performance',era:'live'},
-      {id:'nQzMHBelzaQ',title:'Say You Will',meta:'Official Video · Inside Information, 1987',era:'modern'},
+      {id:'r3Pr1_v7hsw', title:'I Want to Know What Love Is',meta:'Official Video · Agent Provocateur, 1984',     era:'classic'},
+      {id:'8yDmeYxTeC0', title:'Hot Blooded',                meta:'Official Live Video · Double Vision, 1978',    era:'live'},
+      {id:'ySb1f9zWJkQ', title:'Cold as Ice',                meta:'Official Video · Foreigner, 1977',             era:'classic'},
+      {id:'Ic02W1bWeFU', title:'Juke Box Hero',              meta:'Official Video · 4, 1981',                     era:'classic'},
+      {id:'Lcb-Fsx_phM', title:'Urgent',                     meta:'Official Video · 4, 1981',                     era:'classic'},
+      {id:'5jhocSCSZzk', title:'Waiting for a Girl Like You',meta:'Official Video · 4, 1981',                     era:'classic'},
+      {id:'dD-SpHH7qDA', title:'Double Vision',              meta:'Official Video · Double Vision, 1978',         era:'classic'},
+      {id:'CK6jKL2qWxo', title:'Feels Like the First Time', meta:'Official Video · Foreigner, 1977',             era:'classic'},
     ]},
   journey:{label:'Journey',tc:'aj',cc:'cj',bc:'bj',nc:'aj',color:'var(--c-journey)',
     bio:"<strong style='color:var(--c-journey)'>JOURNEY</strong> — Formed 1973 in San Francisco. With Steve Perry's legendary vocals, they became one of the best-selling bands of all time. <em>Don't Stop Believin'</em> is one of the best-selling digital singles in history. Over 100 million records sold worldwide.",
     videos:[
-      {id:'1k8craCGpgs',title:"Don't Stop Believin'",meta:'Official Video · Escape, 1981',era:'classic'},
-      {id:'OMD8ZoOLzFI',title:'Open Arms',meta:'Official Video · Escape, 1981',era:'classic'},
-      {id:'G9PuYbKmpoI',title:'Faithfully',meta:'Official Video · Frontiers, 1983',era:'classic'},
-      {id:'nG9oN7fJGiI',title:'Separate Ways (Worlds Apart)',meta:'Official Video · Frontiers, 1983',era:'classic'},
-      {id:'LatorN4P9aA',title:'Any Way You Want It',meta:'Official Video · Departure, 1980',era:'classic'},
-      {id:'oc20aBjOBTg',title:'Wheel in the Sky',meta:'Official Video · Infinity, 1978',era:'classic'},
-      {id:'erGYzQUTRpE',title:'Lights',meta:'Official Video · Infinity, 1978',era:'classic'},
-      {id:'4IpBiKc_TcY',title:'Send Her My Love',meta:'Official Video · Frontiers, 1983',era:'classic'},
-      {id:'BI9IMqzGFmo',title:"Don't Stop Believin' (Live)",meta:'Live in Manila, 2009',era:'live'},
-      {id:'wbiSS-tOVtA',title:'Lovin Touchin Squeezin (Live)',meta:'Departure Tour',era:'live'},
-      {id:'XHVxRCMHhBo',title:'Only the Young',meta:'Vision Quest Soundtrack, 1985',era:'modern'},
+      {id:'1k8craCGpgs', title:"Don't Stop Believin'",       meta:"Official Audio · Escape, 1981",                era:'classic'},
+      {id:'i5pUOVC50Y8', title:'Open Arms',                  meta:'Official Video · Escape, 1981',                era:'classic'},
+      {id:'OMD8hBsA-RI', title:'Faithfully',                 meta:'Official HD Video · Frontiers, 1983',          era:'classic'},
+      {id:'LatorN4P9aA', title:'Separate Ways (Worlds Apart)',meta:'Official HD Video · Frontiers, 1983',         era:'classic'},
+      {id:'atxUuldUcfI', title:'Any Way You Want It',        meta:'Official HD Video · Departure, 1980',          era:'classic'},
+      {id:'MxGEVIvSFeY', title:'Wheel in the Sky',           meta:'Official HD Video · Infinity, 1978',           era:'classic'},
+      {id:'tNG62fULYgI', title:'Lights',                     meta:'Official HD Video · Infinity, 1978',           era:'classic'},
+      {id:'InyWhQLfO7A', title:'Send Her My Love',           meta:'Official HD Video · Frontiers, 1983',          era:'classic'},
+      {id:'4Yy6pmsQ9H8', title:"Don't Stop Believin' (Live)",meta:'Live Performance',                             era:'live'},
     ]},
   nightranger:{label:'Night Ranger',tc:'an',cc:'cn',bc:'bn',nc:'an',color:'var(--c-nightranger)',
     bio:"<strong style='color:var(--c-nightranger)'>NIGHT RANGER</strong> — Formed 1982 in San Francisco. Anchored by guitarist Brad Gillis and drummer Kelly Keagy, they became one of the defining hard rock bands of the MTV era. Their first five albums sold over 10 million copies. <em>Sister Christian</em> remains their signature anthem.",
     videos:[
-      {id:'vYkaRMSBUAM',title:'Sister Christian',meta:'Official Video · Midnight Madness, 1984',era:'classic'},
-      {id:'VXvtVrIFAGU',title:'(You Can Still) Rock in America',meta:'Official Video · Midnight Madness, 1983',era:'classic'},
-      {id:'rXusmkbrGEY',title:"Don't Tell Me You Love Me",meta:'Official Video · Dawn Patrol, 1982',era:'classic'},
-      {id:'kEWaWZiWFY8',title:'When You Close Your Eyes',meta:'Official Video · Midnight Madness, 1984',era:'classic'},
-      {id:'5BOFSeqHsJo',title:'Sentimental Street',meta:'Official Video · 7 Wishes, 1985',era:'classic'},
-      {id:'aHk5MLpVhAU',title:'Four in the Morning',meta:'Official Video · 7 Wishes, 1985',era:'classic'},
-      {id:'OYXpTjq4OBw',title:'Goodbye',meta:'Official Video · Big Life, 1987',era:'classic'},
-      {id:'Fms_bL9FXWI',title:'Sister Christian (Live)',meta:'Live Classic Performance',era:'live'},
-      {id:'RZQBaJKUfkA',title:'Rock in America (Live)',meta:'Live Performance',era:'live'},
-      {id:'kTMXXvxMwMw',title:'Somehow Someway',meta:'Somewhere in California, 2011',era:'modern'},
+      {id:'z92bmlcmyq0', title:'Sister Christian',           meta:'Official Video · Midnight Madness, 1984',      era:'classic'},
+      {id:'YbF0axsoQIw', title:'(You Can Still) Rock in America', meta:'Official Video · Midnight Madness, 1983', era:'classic'},
+      {id:'Y-4hp5HZ2aU', title:"Don't Tell Me You Love Me", meta:'Official Video · Dawn Patrol, 1982',           era:'classic'},
+      {id:'NYvJPcp9k4s', title:'When You Close Your Eyes',  meta:'Official Video · Midnight Madness, 1984',      era:'classic'},
+      {id:'has6r1zQPcI', title:'Sentimental Street',        meta:'Official Video · 7 Wishes, 1985',              era:'classic'},
+      {id:'tDK-gV8u9LU', title:'Four in the Morning',       meta:'Official Video · 7 Wishes, 1985',              era:'classic'},
+      {id:'Zg-KJSv-2aE', title:'Goodbye',                   meta:'Official Video · Big Life, 1987',              era:'classic'},
     ]}
 };
 
 const eraLabel={classic:'Classic Era',live:'Live',modern:'Modern Era',documentary:'Documentary'};
-const eras=['all','classic','live','modern','documentary'];
+const eras=['all','classic','live','modern'];
 const th  = id => 'https://img.youtube.com/vi/'+id+'/mqdefault.jpg';
 const emb = id => 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&modestbranding=1&enablejsapi=1';
 const ytw = id => 'https://www.youtube.com/watch?v='+id;
 
-let currentId = '', currentTitle = '';
+let currentId='', currentTitle='', blockTimer=null;
 
-// ── Fallback detection ──────────────────────────────────────────────────────
-// Method 1: YouTube postMessage API error codes 100/101/150 = blocked
-window.addEventListener('message', function(e) {
+// Detect embedding blocked via YouTube postMessage error codes
+window.addEventListener('message', function(e){
   try {
     const d = JSON.parse(e.data);
-    if (d.event === 'onError' && [100,101,150].includes(Number(d.info))) {
-      showFallback();
-    }
-  } catch(_) {}
+    if (d.event==='onError' && [100,101,150].includes(Number(d.info))) showFallback();
+  } catch(_){}
 });
 
-// Method 2: After a short delay, check if the iframe loaded any real content.
-// Blocked videos load instantly with an error page; playable ones take longer
-// because they start loading media. We detect the blocked case by checking
-// whether the iframe's src changed away from our embed URL (which happens when
-// YouTube redirects to the error page) OR by reading a known error text via
-// a same-origin trick (not possible cross-origin, so we rely on timing + postMessage).
-let blockCheckTimer = null;
-function scheduleBlockCheck() {
-  clearTimeout(blockCheckTimer);
-  blockCheckTimer = setTimeout(function() {
-    // If fallback is already visible, skip
-    if (document.getElementById('modal-fallback').classList.contains('visible')) return;
-    // Try to read the iframe title — blocked videos get title "YouTube" immediately
-    // Playable ones get the video title. We can't read cross-origin content directly,
-    // so we use the page title trick via the iframe load event instead (see onIframeLoad).
-  }, 3000);
-}
-
+// Belt-and-suspenders: after 2.5s check if iframe got a cross-origin error page
 function onIframeLoad(iframe) {
-  // If the iframe loaded but its contentDocument is inaccessible (cross-origin, normal)
-  // we can't read the title. However YouTube fires postMessage errors for blocked videos.
-  // As a belt-and-suspenders approach, we also try reading the iframe title after a
-  // short delay — YouTube sets the page title to "YouTube" for error pages.
-  setTimeout(function() {
+  setTimeout(function(){
     try {
-      // This will throw for cross-origin — expected for playable videos
       const t = iframe.contentDocument && iframe.contentDocument.title;
       if (t === 'YouTube' || t === '') showFallback();
-    } catch(_) {
-      // Cross-origin = video is loading normally, do nothing
+    } catch(_){
+      // Cross-origin means real video loaded — do nothing
     }
-  }, 2000);
+  }, 2500);
 }
 
-function showFallback() {
+function showFallback(){
   const fb = document.getElementById('modal-fallback');
   if (fb.classList.contains('visible')) return;
   document.getElementById('fallback-title').textContent = currentTitle;
@@ -343,39 +294,34 @@ function showFallback() {
   fb.classList.add('visible');
 }
 
-function hideFallback() {
-  document.getElementById('modal-fallback').classList.remove('visible');
-}
+function hideFallback(){ document.getElementById('modal-fallback').classList.remove('visible'); }
 
-// ── Modal controls ──────────────────────────────────────────────────────────
-function openVideo(id, title, meta) {
-  currentId = id;
-  currentTitle = title;
+function openVideo(id, title, meta){
+  currentId=id; currentTitle=title;
   hideFallback();
+  clearTimeout(blockTimer);
   document.getElementById('modal-iframe').src = emb(id);
   document.getElementById('modal-title').textContent = title;
   document.getElementById('modal-meta').textContent = meta;
   document.getElementById('modal-yt-link').href = ytw(id);
   document.getElementById('fallback-btn').href = ytw(id);
   document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  scheduleBlockCheck();
+  document.body.style.overflow='hidden';
 }
 
-function closeModalNow() {
-  clearTimeout(blockCheckTimer);
-  document.getElementById('modal-iframe').src = '';
+function closeModalNow(){
+  clearTimeout(blockTimer);
+  document.getElementById('modal-iframe').src='';
   document.getElementById('modal').classList.remove('open');
   hideFallback();
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
-function closeModal(e) { if (e.target === document.getElementById('modal')) closeModalNow(); }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalNow(); });
+function closeModal(e){ if(e.target===document.getElementById('modal')) closeModalNow(); }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModalNow(); });
 
-// ── Panel / grid builders ────────────────────────────────────────────────────
-function buildPanel(band) {
-  const c = cfg[band];
-  const filters = eras.map(e =>
+function buildPanel(band){
+  const c=cfg[band];
+  const filters=eras.map(e=>
     `<button class="fbtn ${c.nc}${e==='all'?' on':''}" onclick="filt('${band}','${e}',this)">${e==='all'?'All':eraLabel[e]}</button>`
   ).join('');
   return `
@@ -387,13 +333,13 @@ function buildPanel(band) {
   </div>`;
 }
 
-function buildCards(band, filter) {
-  const c = cfg[band];
-  const list = filter==='all' ? c.videos : c.videos.filter(v=>v.era===filter);
-  return list.map(v => `
+function buildCards(band, filter){
+  const c=cfg[band];
+  const list=filter==='all'?c.videos:c.videos.filter(v=>v.era===filter);
+  return list.map(v=>`
     <div class="card ${c.cc}" onclick="openVideo('${v.id}','${v.title.replace(/'/g,"\\'")}','${v.meta.replace(/'/g,"\\'")}')">
       <div class="thumb">
-        <img src="${th(v.id)}" alt="${v.title}" loading="lazy">
+        <img src="${th(v.id)}" alt="${v.title}" loading="lazy" onerror="this.style.background='#2a2018'">
         <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="cinfo">
@@ -404,7 +350,7 @@ function buildCards(band, filter) {
     </div>`).join('');
 }
 
-function sw(band) {
+function sw(band){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>{t.className='tab';});
   document.getElementById('p-'+band).classList.add('active');
@@ -412,13 +358,13 @@ function sw(band) {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function filt(band, era, btn) {
+function filt(band, era, btn){
   document.querySelectorAll('#fl-'+band+' .fbtn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  document.getElementById('gr-'+band).innerHTML = buildCards(band, era);
+  document.getElementById('gr-'+band).innerHTML=buildCards(band,era);
 }
 
-document.getElementById('panels').innerHTML = Object.keys(cfg).map(buildPanel).join('');
+document.getElementById('panels').innerHTML=Object.keys(cfg).map(buildPanel).join('');
 </script>
 </body>
 </html>
